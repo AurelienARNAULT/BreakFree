@@ -1,11 +1,11 @@
 # BeakFree
-# Tableau dans un tableau
+## Tableau dans un tableau
 
-## Configuration Requise
+### Configuration Requise
 
 Pour exécuter cette application, assurez-vous que les packages requis sont installés sur votre système. Les dépendances requises sont listées dans le fichier `requirements.txt`.
 
-## Installation
+### Installation
 
 1. **Installer les Dépendances** : 
    Ouvrez un terminal et naviguez jusqu'au répertoire contenant le fichier `requirements.txt`. Exécutez la commande suivante pour installer les dépendances :
@@ -28,7 +28,7 @@ Pour lancer l'application, exécutez le script `tableau.py` depuis votre termina
 
 L'application démarre en mode plein écran. Utilisez votre souris pour dessiner sur le tableau virtuel. Les zones spécifiques pour le dessin sont marquées sur l'écran.
 
-## Commandes
+### Commandes
 
 - **Dessin** : Cliquez et déplacez la souris sur les zones désignées pour dessiner.
 - **Quitter** : Appuyez sur la touche `ESCAPE` pour quitter l'application.
