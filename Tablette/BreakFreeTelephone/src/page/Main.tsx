@@ -36,8 +36,9 @@ const App = () => {
   const buttonWidth =
     orientation === 'landscape' ? windowWidth * 0.2 : windowWidth * 0.3;
   const buttonHeight =
-    orientation === 'landscape' ? windowHeight * 0.4 : windowHeight * 0.4;
-  const margindin = orientation === 'landscape' ? 20 : 40;
+    orientation === 'landscape' ? windowHeight * 0.4 : windowHeight * 0.7;
+  const finalsize = buttonWidth > buttonHeight ? buttonHeight : buttonWidth;
+  const margindin = orientation === 'landscape' ? 30 : 40;
 
   return (
     <ImageBackground
@@ -51,58 +52,66 @@ const App = () => {
             : styles.container
         }>
         <View style={styles.grid}>
-          <TouchableOpacity
-            style={styles.gridItem}
-            onPress={() => console.log('Bouton 1 cliqué')}>
-            <Image
-              source={require('../ressources/Poche.png')}
-              style={{
-                width: buttonWidth,
-                height: buttonHeight,
-                resizeMode: 'contain',
-                margin: margindin,
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.gridItem}
-            onPress={() => console.log('Bouton 2 cliqué')}>
-            <Image
-              source={require('../ressources/Enigme.png')}
-              style={{
-                width: buttonWidth,
-                height: buttonHeight,
-                resizeMode: 'contain',
-                margin: margindin,
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.gridItem}
-            onPress={() => console.log('Bouton 3 cliqué')}>
-            <Image
-              source={require('../ressources/histoire_bouton.png')}
-              style={{
-                width: buttonWidth,
-                height: buttonHeight,
-                resizeMode: 'contain',
-                margin: margindin,
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.gridItem}
-            onPress={() => console.log('Bouton 4 cliqué')}>
-            <Image
-              source={require('../ressources/Scanner.png')}
-              style={{
-                width: buttonWidth,
-                height: buttonHeight,
-                resizeMode: 'contain',
-                margin: margindin,
-              }}
-            />
-          </TouchableOpacity>
+          <View style={styles.gridItem}>
+            <TouchableOpacity
+              style={{padding: 0}}
+              onPress={() => console.log('Bouton 1 cliqué')}>
+              <Image
+                source={require('../ressources/Poche.png')}
+                style={{
+                  width: finalsize,
+                  height: finalsize,
+                  resizeMode: 'contain',
+                  margin: margindin,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.gridItem}>
+            <TouchableOpacity
+              style={{padding: 0}}
+              onPress={() => console.log('Bouton 2 cliqué')}>
+              <Image
+                source={require('../ressources/Enigme.png')}
+                style={{
+                  width: finalsize,
+                  height: finalsize,
+                  resizeMode: 'contain',
+                  margin: margindin,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.gridItem}>
+            <TouchableOpacity
+              style={{padding: 0}}
+              onPress={() => console.log('Bouton 3 cliqué')}>
+              <Image
+                source={require('../ressources/histoire_bouton.png')}
+                style={{
+                  width: finalsize,
+                  height: finalsize,
+                  resizeMode: 'contain',
+                  margin: margindin,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.gridItem}>
+            <TouchableOpacity
+              style={{padding: 0}}
+              onPress={() => console.log('Bouton 4 cliqué')}>
+              <Image
+                source={require('../ressources/Scanner.png')}
+                style={{
+                  width: finalsize,
+                  height: finalsize,
+                  resizeMode: 'contain',
+                  margin: margindin,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </ImageBackground>
@@ -114,14 +123,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    margin: 10,
   },
   containerLandscape: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    margin: 10,
   },
   grid: {
     flexDirection: 'row',
@@ -132,7 +141,7 @@ const styles = StyleSheet.create({
     width: '40%',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    margin: 10,
   },
   buttonImage: {
     width: '95%',
