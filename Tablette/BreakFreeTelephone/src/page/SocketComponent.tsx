@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 
 const SocketComponent = () => {
   const [message, setMessage] = useState('');
-  const socket = io('http://10.212.98.199:3000'); // Création de l'instance Socket
+  const socket = io('http://10.212.98.199:3000');
 
   useEffect(() => {
     console.log('Connexion Socket établie.');
