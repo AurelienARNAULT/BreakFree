@@ -8,7 +8,6 @@ public class SocketManager : MonoBehaviour
 {
     public SocketIOUnity socket;
     public string serverUrlLink = "http://localhost:3000";
-    public TextMeshProUGUI messageText; 
 
     void Start()
     {
@@ -37,11 +36,6 @@ public class SocketManager : MonoBehaviour
             }
 
             Debug.Log(messageBody);
-
-            if (messageText != null)
-            {
-                messageText.text = messageBody;
-            }
         });
 
 
