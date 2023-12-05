@@ -242,7 +242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbe2b803568d8374199a9a6497d379ef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1020
+      value: 507
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbe2b803568d8374199a9a6497d379ef, type: 3}
       propertyPath: m_LocalPosition.y
@@ -323,7 +323,7 @@ MonoBehaviour:
     RequiredFingerCount: 0
     RequiredMouseButtons: 0
     RequiredSelectable: {fileID: 813628634}
-  axis: {x: 0, y: -1, z: 0}
+  axis: {x: 0, y: 0, z: -1}
   space: 1
   sensitivity: 1
 --- !u!114 &813628633
@@ -541,7 +541,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44a88bb8365f9374099471b689cff71d, type: 2}
+  - {fileID: 2100000, guid: 0131539bceac75b4d9fbaf7e546b72cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -888,6 +888,19 @@ MonoBehaviour:
   onSelectedSelectFingerUp:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1434234198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434234174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8fb06a7a7bac9b4dba6df282fbd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pocketIconPrefab: {fileID: 1304620099942253952, guid: 24936902f73a6c944a99ad4e438bc375, type: 3}
 --- !u!1 &1650081524
 GameObject:
   m_ObjectHideFlags: 0
