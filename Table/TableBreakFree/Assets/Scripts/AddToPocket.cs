@@ -10,14 +10,12 @@ public class AddToPocket : MonoBehaviour
     public GameObject pocketIconPrefab;
     private GameObject pocketIconInstance;
 
-
     private void Update()
     {
         if (isTouching)
         {
             Debug.Log("IsTouching");
             touchDuration += Time.deltaTime;
-
             if (touchDuration >= 3f)
             {
                 ShowPocketIcon();
@@ -31,11 +29,6 @@ public class AddToPocket : MonoBehaviour
         LeanTouch.OnFingerUp += OnFingerUp;
 
         pocketIconInstance = Instantiate(pocketIconPrefab);
-
-        Vector3 objectPosition = transform.position;
-
-        pocketIconInstance.transform.position = new Vector3(objectPosition.x + 10f, objectPosition.y, objectPosition.z);
-
         pocketIconInstance.SetActive(false);
     }
 
@@ -53,17 +46,25 @@ public class AddToPocket : MonoBehaviour
     private void OnFingerDown(LeanFinger finger)
     {
         Debug.Log("OnFingerDown");
-        if (finger.IsOverGui)
+
+        // Raycast pour détecter si le doigt touche l'objet
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(finger.ScreenPosition);
+
+        if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
         {
-            Debug.Log("You just tapped the screen on top of the object!");
+            Debug.Log("You just tapped the object!");
             isTouching = true;
+
+            // Position de l'icône à côté de l'objet
+            Vector3 iconPosition = transform.position + transform.right * 50f; // Vous pouvez ajuster le décalage ici
+
+            pocketIconInstance.transform.position = iconPosition;
         }
         else
         {
-            if (isPocketShowing)
-            {
-                HidePocketIcon();
-            }
+            // Cacher l'icône si le doigt ne touche ni l'objet ni l'icône
+            HidePocketIcon();
         }
     }
 
@@ -91,5 +92,4 @@ public class AddToPocket : MonoBehaviour
             isPocketShowing = false;
         }
     }
-
 }

@@ -9,8 +9,24 @@ public class SocketManager : MonoBehaviour
     public SocketIOUnity socket;
     public string serverUrlLink = "http://localhost:3000";
 
-    void Start()
+    // Singleton pattern
+    private static SocketManager instance;
+    public static SocketManager Instance { get { return instance; } }
+
+    void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+
         var uri = new Uri(serverUrlLink);
         socket = new SocketIOUnity(uri);
 
@@ -38,16 +54,15 @@ public class SocketManager : MonoBehaviour
             Debug.Log(messageBody);
         });
 
-
         socket.Connect();
     }
 
-    void Update()
+    public void SendSocket(params string[] messages)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        foreach (string message in messages)
         {
-            socket.EmitAsync("newMessage", "Hello World!");
-            Debug.Log("message sent");
+            socket.EmitAsync("newMessage", message);
+            Debug.Log($"Message sent: {message}");
         }
     }
 
