@@ -68,6 +68,10 @@ public class SocketManager : MonoBehaviour
 
     void OnDestroy()
     {
-        socket.Dispose();
+        if (socket != null)
+        {
+            socket.Dispose();
+        }
     }
+
 }
