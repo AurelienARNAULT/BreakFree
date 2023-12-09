@@ -4,7 +4,6 @@ using Lean.Touch;
 public class AddToPocket : MonoBehaviour
 {
     private bool isTouching = false;
-    private bool isPocketShowing = true;
     private float touchDuration = 0f;
 
     public GameObject pocketIconPrefab;
@@ -80,7 +79,6 @@ public class AddToPocket : MonoBehaviour
         if (pocketIconInstance != null)
         {
             pocketIconInstance.SetActive(true);
-            isPocketShowing = true;
         }
     }
 
@@ -89,7 +87,6 @@ public class AddToPocket : MonoBehaviour
         if (pocketIconInstance != null)
         {
             pocketIconInstance.SetActive(false);
-            isPocketShowing = false;
         }
     }
 }
