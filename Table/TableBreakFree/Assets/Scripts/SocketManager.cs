@@ -61,7 +61,7 @@ public class SocketManager : MonoBehaviour
     {
         foreach (string message in messages)
         {
-            socket.EmitAsync("newMessage", message);
+            socket.EmitAsync(message, message);
             Debug.Log($"Message sent: {message}");
         }
     }

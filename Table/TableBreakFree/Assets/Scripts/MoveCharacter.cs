@@ -6,6 +6,7 @@ public class MoveCharacter : MonoBehaviour
     private Vector3 positionOrigine;
     private bool inForbiddenZone = false;
     private bool inSalon = false;
+    private bool inChambre = false;
 
 
     void Start()
@@ -28,6 +29,11 @@ public class MoveCharacter : MonoBehaviour
             inSalon = true;
             Debug.Log("Collision avec le salon");
         }
+        else if (other.CompareTag("ChambreCollider"))
+        {
+            inChambre = true;
+            Debug.Log("Collision avec la chambre");
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -42,20 +48,30 @@ public class MoveCharacter : MonoBehaviour
         {
             inSalon = false;
         }
+
+        else if (other.CompareTag("ChambreCollider"))
+        {
+            inChambre = false;
+        }
     }
 
     void Update()
     {
         // Vérifiez si le personnage est actuellement dans une zone interdite et s'il n'y a pas de mouvement
-        if (inForbiddenZone && !Input.GetMouseButtonDown(0))
+        if (inForbiddenZone && !(Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
         {
             // Repositionnez le personnage à sa position d'origine
             ReplacerAPositionOrigine();
         }
 
-        else if (inSalon && !Input.GetMouseButtonDown(0))
+        else if (inSalon && !(Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
         {
             SceneManager.LoadScene(1);
+        }
+
+        else if (inChambre && !(Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
+        {
+            SceneManager.LoadScene(3);
         }
     }
 
