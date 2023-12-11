@@ -4,14 +4,17 @@ import {
   SubscribeMessage,
   MessageBody,
   WebSocketServer,
+  ConnectedSocket,
 } from '@nestjs/websockets';
 
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway() // changer le port d'écoute si besoin
+@WebSocketGateway()
 export class MyGateway implements OnModuleInit {
   @WebSocketServer()
   server: Server;
+
+  private deviceMap = new Map<string, string>();
 
   onModuleInit() {
     this.server.on('connection', (socket) => {
@@ -20,11 +23,34 @@ export class MyGateway implements OnModuleInit {
     });
   }
 
-  @SubscribeMessage('newMessage') // à changer en fonction des nécessité
+  @SubscribeMessage('newMessage')
   onNewMessage(@MessageBody() body: any) {
     console.log(body);
     this.server.emit('onMessage', {
       msg: 'New message',
+      content: body,
+    });
+  }
+
+  @SubscribeMessage('helloWorld')
+  onHelloWorld(
+    @MessageBody() body: { deviceName: string; message: string },
+    @ConnectedSocket() socket: Socket,
+  ) {
+    console.log(body);
+    if (socket && socket.id) {
+      this.deviceMap.set(body.deviceName, socket.id);
+    } else {
+      console.log('Error: socket or socket.id is undefined');
+    }
+    console.log(this.deviceMap);
+  }
+
+  @SubscribeMessage('vanGoghClick')
+  async onVanGoghClick(@MessageBody() body: any) {
+    console.log(body);
+    this.server.emit('onVanGoghClick', {
+      msg: 'The Van Gogh painting was clicked',
       content: body,
     });
   }
