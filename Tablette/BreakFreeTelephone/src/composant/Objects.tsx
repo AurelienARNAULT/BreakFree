@@ -1,19 +1,26 @@
 import {
     GestureEvent,
     GestureHandlerRootView,
-    PanGestureHandler,
+    PanGestureHandler, PanGestureHandlerEventPayload,
     PinchGestureHandler, PinchGestureHandlerEventPayload,
     RotationGestureHandler, RotationGestureHandlerEventPayload, State
 } from "react-native-gesture-handler";
 import {Animated, Dimensions, View} from "react-native";
 import React from "react";
 
+interface position {
+    top: number;
+    left: number;
+    right: number;
+    bottom: number;
+}
 
 interface ObjectsProps {
     objectName: string; // Add a type to objectName
+    containerPosition: position|null;
 }
 
-const Objects: React.FC<ObjectsProps> = ({objectName}) => {
+const Objects: React.FC<ObjectsProps> = ({objectName, containerPosition}) => {
     const panRef = React.createRef<PanGestureHandler>();
     const rotationRef = React.createRef<RotationGestureHandler>();
     const pinchRef = React.createRef<PinchGestureHandler>();
@@ -21,11 +28,10 @@ const Objects: React.FC<ObjectsProps> = ({objectName}) => {
     let circleRadius = 70;
 
     //PAN GESTURE -------------------------------------------
-    const {width} = Dimensions.get('window');
-    const {height} = Dimensions.get('window');
-    let _touchX = new Animated.Value(width / 4 - circleRadius);
-    let _touchY = new Animated.Value(height / 1.8 - circleRadius);
-
+    let _lastOffset = {x: 0, y: 100000};
+    let _touchX = new Animated.Value(_lastOffset.x);
+    let _touchY = new Animated.Value(_lastOffset.y);
+    let firstTouch = true;
 
     let imagePath = require('../ressources/key.png');
     let newImageHeight = circleRadius * 1.8;
@@ -36,15 +42,47 @@ const Objects: React.FC<ObjectsProps> = ({objectName}) => {
         circleRadius = 75;
         newImageHeight = circleRadius * 4;
         newImageWidth = circleRadius * 2;
-        _touchX = new Animated.Value(width / 2 - circleRadius);
-        _touchY = new Animated.Value(height / 4 - circleRadius);
     }
 
 
-    let _onPanGestureEvent = Animated.event([{nativeEvent: {x: _touchX, y: _touchY}}], {
-        useNativeDriver: true,
-    });
+    const _onPanGestureEvent = (event: GestureEvent<PanGestureHandlerEventPayload>) => {
+        if (firstTouch) {
+            // Ajustez uniquement lors de la première interaction
+            _touchY.setOffset(100000); // Compenser pour la position initiale masquée
+        }
 
+        _touchX.setValue(event.nativeEvent.translationX);
+        _touchY.setValue(event.nativeEvent.translationY);
+    };
+
+    const onPanHandlerStateChange = (event: GestureEvent<PanGestureHandlerEventPayload>) => {
+        if (event.nativeEvent.state === State.END) {
+            _lastOffset.x += event.nativeEvent.translationX;
+            _lastOffset.y += event.nativeEvent.translationY;
+            if (containerPosition !== undefined && containerPosition !== null) {
+                if (_lastOffset.x < containerPosition.left) {
+                    _lastOffset.x = containerPosition.left;
+                }
+                if (_lastOffset.x > containerPosition.right) {
+                    _lastOffset.x = containerPosition.right;
+                }
+                if (_lastOffset.y - 100000 < containerPosition.top) {
+                    _lastOffset.y = containerPosition.top + 100000;
+                }
+                if (_lastOffset.y - 100000 > containerPosition.bottom) {
+                    _lastOffset.y = containerPosition.bottom + 100000;
+                }
+            }
+
+            _touchX.setOffset(_lastOffset.x);
+            _touchY.setOffset(_lastOffset.y);
+            _touchX.setValue(0);
+            _touchY.setValue(0);
+            firstTouch = false;
+            console.log('containerPosition:', containerPosition);
+            console.log('_lastOffset:', _lastOffset);
+        }
+    };
     //ROTATION GESTURE -------------------------------------------
     const _rotate = new Animated.Value(0);
     let _lastRotate = 0;
@@ -58,6 +96,7 @@ const Objects: React.FC<ObjectsProps> = ({objectName}) => {
         [{nativeEvent: {rotation: _rotate}}],
         {useNativeDriver: true}
     );
+
     const _onRotateHandlerStateChange = (event: GestureEvent<RotationGestureHandlerEventPayload>) => {
         if (event.nativeEvent.state === State.ACTIVE) {
             _lastRotate += event.nativeEvent.rotation;
@@ -90,6 +129,7 @@ const Objects: React.FC<ObjectsProps> = ({objectName}) => {
         <View style={{
             height: newImageHeight,
             width: newImageWidth,
+            top: -100000,
         }}>
             <PinchGestureHandler
                 ref={pinchRef}
@@ -112,12 +152,14 @@ const Objects: React.FC<ObjectsProps> = ({objectName}) => {
                                 width: newImageWidth,
                             }}>
                             <PanGestureHandler onGestureEvent={_onPanGestureEvent}
+                                               onHandlerStateChange={onPanHandlerStateChange}
                                                ref={panRef}
                                                simultaneousHandlers={[pinchRef, rotationRef]}>
                                 <Animated.View
                                     style={{
                                         height: newImageHeight,
                                         width: newImageWidth,
+                                        backgroundColor: 'red',
                                     }}>
                                     <Animated.Image
                                         source={imagePath}
@@ -125,6 +167,7 @@ const Objects: React.FC<ObjectsProps> = ({objectName}) => {
                                             {
                                                 height: newImageHeight,
                                                 width: newImageWidth,
+                                                backgroundColor: 'blue',
                                             },
                                             {
                                                 transform: [
