@@ -13,11 +13,17 @@ public class AddToPocket : MonoBehaviour
     {
         if (isTouching)
         {
-            Debug.Log("IsTouching");
             touchDuration += Time.deltaTime;
-            if (touchDuration >= 3f)
+
+            // Mettre à jour la position de l'icône pendant le déplacement
+            if (!(LeanTouch.Fingers[0].ScreenDelta.magnitude > 0f) && touchDuration >= 2f)
             {
+                UpdatePocketIconPosition();
                 ShowPocketIcon();
+            }
+            else if (!(LeanTouch.Fingers[0].ScreenDelta.magnitude > 0f))
+            {
+                UpdatePocketIconPosition();
             }
         }
     }
@@ -44,21 +50,15 @@ public class AddToPocket : MonoBehaviour
 
     private void OnFingerDown(LeanFinger finger)
     {
-        Debug.Log("OnFingerDown");
-
-        // Raycast pour détecter si le doigt touche l'objet
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(finger.ScreenPosition);
 
         if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
         {
-            Debug.Log("You just tapped the object!");
             isTouching = true;
 
             // Position de l'icône à côté de l'objet
-            Vector3 iconPosition = transform.position + transform.right * 50f; // Vous pouvez ajuster le décalage ici
-
-            pocketIconInstance.transform.position = iconPosition;
+            UpdatePocketIconPosition();
         }
         else
         {
@@ -69,9 +69,15 @@ public class AddToPocket : MonoBehaviour
 
     private void OnFingerUp(LeanFinger finger)
     {
-        Debug.Log("OnFingerUp");
         isTouching = false;
         touchDuration = 0f;
+    }
+
+    private void UpdatePocketIconPosition()
+    {
+        // Mettre à jour la position de l'icône à côté de l'objet
+        Vector3 iconPosition = transform.position + transform.right * 50f; // Vous pouvez ajuster le décalage ici
+        pocketIconInstance.transform.position = iconPosition;
     }
 
     private void ShowPocketIcon()
