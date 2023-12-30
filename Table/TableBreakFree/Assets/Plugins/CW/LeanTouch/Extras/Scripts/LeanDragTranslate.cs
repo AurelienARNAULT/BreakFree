@@ -66,15 +66,15 @@ namespace Lean.Touch
 		{
 			// Store
 			var oldPosition = transform.localPosition;
-			Debug.Log(oldPosition);
+			// Debug.Log(oldPosition);
 
 			// Get the fingers we want to use
 			var fingers = Use.UpdateAndGetFingers();
-			Debug.Log(fingers);
+			// Debug.Log(fingers);
 
 			// Calculate the screenDelta value based on these fingers
 			var screenDelta = LeanGesture.GetScreenDelta(fingers);
-			Debug.Log(screenDelta);
+			// Debug.Log(screenDelta);
 
 			if (screenDelta != Vector2.zero)
 			{

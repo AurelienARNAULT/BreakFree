@@ -245,7 +245,6 @@ GameObject:
   - component: {fileID: 392203110}
   - component: {fileID: 392203109}
   - component: {fileID: 392203108}
-  - component: {fileID: 392203107}
   m_Layer: 0
   m_Name: Fond
   m_TagString: Untagged
@@ -253,19 +252,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &392203107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 392203106}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0183ac68c0c4674abc3ccef4722d257, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serverUrlLink: http://localhost:3000
 --- !u!65 &392203108
 BoxCollider:
   m_ObjectHideFlags: 0

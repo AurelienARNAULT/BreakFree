@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Lean.Touch;
 
 public class MoveCharacter : MonoBehaviour
 {
@@ -16,23 +17,19 @@ public class MoveCharacter : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter");
         // Vérifiez s'il y a une collision avec la zone interdite
         if (other.CompareTag("PieceInterdite"))
         {
             // Marquez que le personnage est actuellement dans une zone interdite
             inForbiddenZone = true;
-            Debug.Log("Collision avec la zone interdite");
         }
         else if (other.CompareTag("SalonCollider"))
         {
             inSalon = true;
-            Debug.Log("Collision avec le salon");
         }
         else if (other.CompareTag("ChambreCollider"))
         {
             inChambre = true;
-            Debug.Log("Collision avec la chambre");
         }
     }
 
@@ -57,21 +54,26 @@ public class MoveCharacter : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("inForbiddenZone " + inForbiddenZone + " x " + LeanTouch.Fingers.Count);
+
         // Vérifiez si le personnage est actuellement dans une zone interdite et s'il n'y a pas de mouvement
-        if (inForbiddenZone && !(Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
+        if (LeanTouch.Fingers.Count <= 1)
         {
-            // Repositionnez le personnage à sa position d'origine
-            ReplacerAPositionOrigine();
-        }
+            if (inForbiddenZone)
+            {
+                // Repositionnez le personnage à sa position d'origine
+                ReplacerAPositionOrigine();
+            }
 
-        else if (inSalon && !(Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
-        {
-            SceneManager.LoadScene(1);
-        }
+            else if (inSalon)
+            {
+                SceneManager.LoadScene(1);
+            }
 
-        else if (inChambre && !(Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
-        {
-            SceneManager.LoadScene(3);
+            else if (inChambre)
+            {
+                SceneManager.LoadScene(3);
+            }
         }
     }
 

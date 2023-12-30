@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TableScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/ChambreScene.unity
+    guid: 94eccc9c1357ed44693e7e3d7b9d5fb2
   m_configObjects: {}
