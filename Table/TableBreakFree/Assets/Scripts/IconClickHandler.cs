@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class IconClickHandler : MonoBehaviour
 {
+    public string message = "";
+
+    void Start()
+    {
+        Debug.Log(message);
+    }
+
     void Update()
     {
         // Vérifier si l'utilisateur a appuyé sur la souris ou a touché l'écran
@@ -32,7 +39,7 @@ public class IconClickHandler : MonoBehaviour
                 if (clickedObject.name == "PocheIcon")
                 {
                     // Votre code à exécuter lorsque l'objet est cliqué ou touché
-                    SocketManager.Instance.SendSocket("keySendToPocket");
+                    SocketManager.Instance.SendSocket(this.message);
                 }
             }
         }

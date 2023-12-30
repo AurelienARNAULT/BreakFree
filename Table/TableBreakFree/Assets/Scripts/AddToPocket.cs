@@ -9,6 +9,22 @@ public class AddToPocket : MonoBehaviour
     public GameObject pocketIconPrefab;
     private GameObject pocketIconInstance;
 
+    private IconClickHandler iconClickHandler;
+
+    private void Start()
+    {
+        iconClickHandler = pocketIconInstance.GetComponent<IconClickHandler>();
+
+        if (iconClickHandler == null)
+        {
+            Debug.LogError("IconClickHandler script not found on pocketIconInstance!");
+        } else
+        {
+            iconClickHandler.message = this.gameObject.name + "SendToPocket";
+            Debug.Log(iconClickHandler.message);
+        }
+    }
+
     private void Update()
     {
         if (isTouching)
