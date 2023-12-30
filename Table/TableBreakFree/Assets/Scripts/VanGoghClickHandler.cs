@@ -34,6 +34,12 @@ public class VanGoghClickHandler : MonoBehaviour
                     // Votre code à exécuter lorsque l'objet est cliqué ou touché
                     SocketManager.Instance.SendSocket("vanGoghClick");
                 }
+
+                if (clickedObject.name == "Tableau")
+                {
+                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
+                    SocketManager.Instance.SendSocket("tableauChambreClick");
+                }
             }
         }
     }
