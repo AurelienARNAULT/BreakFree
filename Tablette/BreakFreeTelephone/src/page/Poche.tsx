@@ -1,9 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect} from 'react';
 import {View, StyleSheet, ImageBackground, Animated, Dimensions, LayoutChangeEvent} from 'react-native';
 import Objects from '../composant/Objects';
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 interface position {
     top: number;
@@ -18,17 +18,13 @@ const Poche = () => {
 
     const onContainerLayout = (event: LayoutChangeEvent) => {
         const layout = event.nativeEvent.layout;
-        console.log('width:', width);
-        console.log('height:', height);
         setContainerPosition({
             top: 0,
-            left:  0,
+            left: 0,
             right: layout.width,
             bottom: layout.height,
         });
-        console.log(layout);
     };
-
 
     return (
         <ImageBackground
@@ -41,9 +37,13 @@ const Poche = () => {
                         source={require('../ressources/valise.png')}
                         style={styles.boxImage}
                         resizeMode="cover">
-                        <GestureHandlerRootView style={{height:'100%'}}>
-                                <Objects objectName={"piece"} containerPosition={containerPosition} />
-                                <Objects objectName={"phone"} containerPosition={containerPosition}/>
+                        <GestureHandlerRootView style={{height: '100%'}}>
+                            <Objects objectName={"piece"} containerPosition={containerPosition}/>
+                            <Objects objectName={"phone"} containerPosition={containerPosition}/>
+                            <Objects objectName={"piece"} containerPosition={containerPosition}/>
+                            <Objects objectName={"piece"} containerPosition={containerPosition}/>
+                            <Objects objectName={"phone"} containerPosition={containerPosition}/>
+                            <Objects objectName={"piece"} containerPosition={containerPosition}/>
                         </GestureHandlerRootView>
                     </ImageBackground>
                 </View>

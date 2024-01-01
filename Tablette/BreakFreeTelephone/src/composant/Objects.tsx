@@ -5,8 +5,8 @@ import {
     PinchGestureHandler, PinchGestureHandlerEventPayload,
     RotationGestureHandler, RotationGestureHandlerEventPayload, State
 } from "react-native-gesture-handler";
-import {Animated, Dimensions, View} from "react-native";
-import React from "react";
+import {Animated, Dimensions, LayoutChangeEvent, View} from "react-native";
+import React, {useRef} from "react";
 
 interface position {
     top: number;
@@ -24,8 +24,18 @@ const Objects: React.FC<ObjectsProps> = ({objectName, containerPosition}) => {
     const panRef = React.createRef<PanGestureHandler>();
     const rotationRef = React.createRef<RotationGestureHandler>();
     const pinchRef = React.createRef<PinchGestureHandler>();
+    const globalRef = useRef<View>(null);
+    let top = 0;
+    let margeTop = 200;
+    let margeLeft = 145;
+
     console.log('objectName:', objectName);
     let circleRadius = 70;
+    let trueTop = containerPosition?.top || 0;
+    let trueBottom = containerPosition?.bottom || 0;
+    let trueLeft = containerPosition?.left || 0;
+    let trueRight = containerPosition?.right || 0;
+    let randomTop = 0;
 
     //PAN GESTURE -------------------------------------------
     let _lastOffset = {x: 0, y: 100000};
@@ -44,11 +54,43 @@ const Objects: React.FC<ObjectsProps> = ({objectName, containerPosition}) => {
         newImageWidth = circleRadius * 2;
     }
 
+    const [containerPosition2, setContainerPosition] = React.useState<position | null>(null);
+    const onContainerLayout = (event: LayoutChangeEvent) => {
+        const layout = event.nativeEvent.layout;
+        setContainerPosition({
+            top: 0,
+            left:  0,
+            right: layout.width,
+            bottom: layout.height,
+        });
+    };
+
+    React.useEffect(() => {
+
+        globalRef.current?.measure((fx, fy, width, height, px, py) => {
+            console.log('height:', height);
+            top = 100000 + py;
+            console.log('top:', top);
+            margeTop -= height/2;
+            margeLeft -= width/2 + 20;
+            trueTop = trueTop - (top || 0) + margeTop ;
+            trueBottom = trueBottom - (top || 0) + margeTop ;
+            trueLeft = trueLeft - px + margeLeft;
+            trueRight = trueRight - px + margeLeft;
+            randomTop = Math.floor(Math.random() * (trueBottom - trueTop + 1)) + trueTop;
+            _lastOffset.y  = _lastOffset.y + randomTop;
+            _lastOffset.x = _lastOffset.x  + Math.floor(Math.random() * (trueRight - trueLeft + 1)) + trueLeft ;
+            _touchX.setOffset(_lastOffset.x);
+            _touchY.setValue(_lastOffset.y)
+        });
+
+        console.log('containerPosition:', containerPosition);
+    }, [containerPosition2, _touchY, _lastOffset.y]);
 
     const _onPanGestureEvent = (event: GestureEvent<PanGestureHandlerEventPayload>) => {
         if (firstTouch) {
             // Ajustez uniquement lors de la première interaction
-            _touchY.setOffset(100000); // Compenser pour la position initiale masquée
+            _touchY.setOffset(100000 + randomTop); // Compenser pour la position initiale masquée
         }
 
         _touchX.setValue(event.nativeEvent.translationX);
@@ -60,17 +102,17 @@ const Objects: React.FC<ObjectsProps> = ({objectName, containerPosition}) => {
             _lastOffset.x += event.nativeEvent.translationX;
             _lastOffset.y += event.nativeEvent.translationY;
             if (containerPosition !== undefined && containerPosition !== null) {
-                if (_lastOffset.x < containerPosition.left) {
-                    _lastOffset.x = containerPosition.left;
+                if (_lastOffset.x < trueLeft) {
+                    _lastOffset.x = trueLeft;
                 }
-                if (_lastOffset.x > containerPosition.right) {
-                    _lastOffset.x = containerPosition.right;
+                if (_lastOffset.x > trueRight) {
+                    _lastOffset.x = trueRight;
                 }
-                if (_lastOffset.y - 100000 < containerPosition.top) {
-                    _lastOffset.y = containerPosition.top + 100000;
+                if (_lastOffset.y - 100000 < trueTop) {
+                    _lastOffset.y = trueTop + 100000;
                 }
-                if (_lastOffset.y - 100000 > containerPosition.bottom) {
-                    _lastOffset.y = containerPosition.bottom + 100000;
+                if (_lastOffset.y - 100000 > trueBottom) {
+                    _lastOffset.y = trueBottom + 100000;
                 }
             }
 
@@ -130,7 +172,7 @@ const Objects: React.FC<ObjectsProps> = ({objectName, containerPosition}) => {
             height: newImageHeight,
             width: newImageWidth,
             top: -100000,
-        }}>
+        }} onLayout={onContainerLayout} ref={globalRef}>
             <PinchGestureHandler
                 ref={pinchRef}
                 onGestureEvent={_onPinchGestureEvent}
