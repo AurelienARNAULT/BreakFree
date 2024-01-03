@@ -8,7 +8,7 @@ type RootStackParamList = {
     Scanner: undefined;
     Histoire: undefined;
     Poche: undefined;
-    About: undefined;
+    Enigme: undefined;
 };
 
 type Main2NavigationProp = StackNavigationProp<RootStackParamList, 'Main2'>;
@@ -52,7 +52,7 @@ const App = ({navigation}: { navigation: Main2NavigationProp }) => {
         },
         {
             source: require('../ressources/Enigme.png'),
-            onPress: () => navigation.navigate('About'),
+            onPress: () => navigation.navigate('Enigme'),
         },
         {
             source: require('../ressources/histoire_bouton.png'),
