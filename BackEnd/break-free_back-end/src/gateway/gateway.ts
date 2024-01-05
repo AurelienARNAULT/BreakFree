@@ -54,4 +54,35 @@ export class MyGateway implements OnModuleInit {
       content: body,
     });
   }
+
+  @SubscribeMessage('objectSentToPocket')
+  onObjectSentToPocket(@MessageBody() body: any) {
+    console.log(body);
+    this.server.emit('onObjectSentToPocket', {
+      msg: 'An object was sent to the pocket',
+      name: body.name,
+      content: body,
+    });
+  }
+
+  @SubscribeMessage('objectUsed')
+  onObjectUsed(@MessageBody() body: any) {
+    console.log(body);
+    console.log(body.name);
+    this.server.emit('onObjectUsed', {
+      msg: 'An object was used',
+      name: body.name,
+      content: body,
+    });
+  }
+
+  @SubscribeMessage('objectDropped')
+  onObjectDropped(@MessageBody() body: any) {
+    console.log(body);
+    this.server.emit('onObjectDropped', {
+      msg: 'An object was dropped',
+      name: body.name,
+      content: body,
+    });
+  }
 }
