@@ -17,7 +17,7 @@ public class MoveCharacter : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Vérifiez s'il y a une collision avec la zone interdite
+        // Vï¿½rifiez s'il y a une collision avec la zone interdite
         if (other.CompareTag("PieceInterdite"))
         {
             // Marquez que le personnage est actuellement dans une zone interdite
@@ -35,7 +35,7 @@ public class MoveCharacter : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        // Réinitialisez le booléen lorsque le personnage quitte la zone interdite
+        // Rï¿½initialisez le boolï¿½en lorsque le personnage quitte la zone interdite
         if (other.CompareTag("PieceInterdite"))
         {
             inForbiddenZone = false;
@@ -54,14 +54,14 @@ public class MoveCharacter : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("inForbiddenZone " + inForbiddenZone + " x " + LeanTouch.Fingers.Count);
+        //Debug.Log("inForbiddenZone " + inForbiddenZone + " x " + LeanTouch.Fingers.Count);
 
-        // Vérifiez si le personnage est actuellement dans une zone interdite et s'il n'y a pas de mouvement
+        // V?rifiez si le personnage est actuellement dans une zone interdite et s'il n'y a pas de mouvement
         if (LeanTouch.Fingers.Count <= 1)
         {
             if (inForbiddenZone)
             {
-                // Repositionnez le personnage à sa position d'origine
+                // Repositionnez le personnage ? sa position d'origine
                 ReplacerAPositionOrigine();
             }
 
