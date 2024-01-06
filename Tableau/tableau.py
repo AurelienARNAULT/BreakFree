@@ -14,13 +14,13 @@ sent = False
 active = False
 transitioning = False
 transition_progress = 0
-transition_speed = 3  # Vitesse de la transition
+transition_speed = 0.5  # Vitesse de la transition
 
 # Tenter de se connecter au serveur
 attempt = 0
 while not sio.connected and attempt < reconnection_attempts:
     try:
-        sio.connect('http://localhost:3000')
+        sio.connect('http://172.20.10.2:3000')
         print("Connecté au serveur WebSocket.")
     except socketio.exceptions.ConnectionError as e:
         print(f"Tentative {attempt + 1}/{reconnection_attempts} échouée: {e}")
@@ -68,7 +68,6 @@ def verifier_rayons(surface, zone_rayon, zone_soleil, couleur, seuil):
     zone_soleil_pixels = pixels[zone_soleil.left:zone_soleil.right, zone_soleil.top:zone_soleil.bottom]
 
     nombre_pixels_zone_soleil = np.sum(np.all(zone_soleil_pixels == couleur, axis=2))
-    print(nombre_pixels_zone_rayon, nombre_pixels_zone_soleil)
     return (nombre_pixels_zone_rayon - nombre_pixels_zone_soleil) > seuil
 
 
@@ -90,7 +89,7 @@ fond = fond_original.copy()
 facteur_luminosite = 0.10
 
 # Création de la fenêtre plein écran
-screen = pygame.display.set_mode((width, height))#, pygame.FULLSCREEN)
+screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 pygame.display.set_caption("Détection de Dessin de Soleil")
 
 # Initialisation des variables
@@ -121,7 +120,6 @@ GREY = (128, 128, 128)
 # Calculer les facteurs d'échelle
 facteur_echelle_largeur = width / original_width - 0.5
 facteur_echelle_hauteur = height / original_height
-print(facteur_echelle_largeur, facteur_echelle_hauteur)
 
 # Ajuster les zones
 zone_soleil = pygame.Rect(width - 101* facteur_echelle_largeur,1,100 * facteur_echelle_largeur,100 * facteur_echelle_hauteur)
@@ -147,10 +145,13 @@ while running:
     elif transitioning:
         # Mise à jour de la progression de la transition
         transition_progress += transition_speed
+        color = (transition_progress, transition_progress, transition_progress)
         if transition_progress >= 255:
-            transitioning = False
-            transition_progress = 255
-        screen.fill((transition_progress, transition_progress, transition_progress))
+            color = (transition_progress - 255, transition_progress - 255, transition_progress - 255)
+            if transition_progress >= 310:
+                transitioning = False
+        
+        screen.fill(color)
         pygame.display.flip()
     else:
         for event in pygame.event.get():
