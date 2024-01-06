@@ -98,6 +98,8 @@ public class SocketManager : MonoBehaviour
 
     public void SendSocket(string eventName, string body)
     {
+        Debug.Log($"Message sent: {body}");
+        Debug.Log($"Event name: {eventName}");
         socket.EmitAsync(eventName, body);
     }
 

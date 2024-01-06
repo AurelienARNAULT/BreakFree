@@ -1,13 +1,30 @@
+using System;
+using SocketIOClient;
 using UnityEngine;
+using TMPro;
+using Newtonsoft.Json.Linq;
 
 public class IconClickHandler : MonoBehaviour
 {
     public string message = "";
     public GameObject gobject;
+    private JObject jsonMessage;
+
+    private string eventName = "objectSentToPocket";
+
+    void Start()
+    {
+        Debug.Log(message);
+        // Cr√©ation d'un nouvel objet JObject et ajout du champ "name"
+        jsonMessage = new JObject
+        {
+            { "name", message }
+        };
+    }
 
     void Update()
     {
-        // VÈrifier si l'utilisateur a appuyÈ sur la souris ou a touchÈ l'Ècran
+        // V√©rifier si l'utilisateur a appuy√© sur la souris ou a touch√© l'√©cran
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             // Obtenir la position du clic ou du toucher
@@ -26,15 +43,17 @@ public class IconClickHandler : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(clickPosition);
             RaycastHit hit;
 
-            // VÈrifier si le rayon intersecte un objet dans la scËne
+            // V√©rifier si le rayon intersecte un objet dans la sc√®ne
             if (Physics.Raycast(ray, out hit))
             {
-                // Objet cliquÈ ou touchÈ
+                // Objet cliqu√© ou touch√©
                 GameObject clickedObject = hit.collider.gameObject;
                 if (clickedObject)
                 {
-                    gobject.SetActive(false);
-
+                    Debug.Log("PocheIcon clicked");
+                    // Votre code √† ex√©cuter lorsque l'objet est cliqu√© ou touch√©
+                    SocketManager.Instance.SendSocket(eventName, jsonMessage.ToString());
+					gobject.SetActive(false);
                 }
             }
         }
