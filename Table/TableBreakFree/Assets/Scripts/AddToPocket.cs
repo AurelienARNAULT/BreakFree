@@ -21,6 +21,7 @@ public class AddToPocket : MonoBehaviour
         } else
         {
             iconClickHandler.message = this.gameObject.name + "SendToPocket";
+            iconClickHandler.gobject = this.gameObject;
         }
     }
 

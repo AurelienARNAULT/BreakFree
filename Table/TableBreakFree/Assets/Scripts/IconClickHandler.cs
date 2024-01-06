@@ -3,11 +3,7 @@ using UnityEngine;
 public class IconClickHandler : MonoBehaviour
 {
     public string message = "";
-
-    void Start()
-    {
-        Debug.Log(message);
-    }
+    public GameObject gobject;
 
     void Update()
     {
@@ -35,11 +31,10 @@ public class IconClickHandler : MonoBehaviour
             {
                 // Objet cliqué ou touché
                 GameObject clickedObject = hit.collider.gameObject;
-                Debug.Log(clickedObject);
                 if (clickedObject)
                 {
-                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
-                    SocketManager.Instance.SendSocket(this.message);
+                    gobject.SetActive(false);
+
                 }
             }
         }
