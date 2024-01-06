@@ -21,7 +21,6 @@ public class AddToPocket : MonoBehaviour
         } else
         {
             iconClickHandler.message = this.gameObject.name + "SendToPocket";
-            Debug.Log(iconClickHandler.message);
         }
     }
 
@@ -79,7 +78,7 @@ public class AddToPocket : MonoBehaviour
         else
         {
             // Cacher l'icône si le doigt ne touche ni l'objet ni l'icône
-            HidePocketIcon();
+            //HidePocketIcon();
         }
     }
 
@@ -92,9 +91,20 @@ public class AddToPocket : MonoBehaviour
     private void UpdatePocketIconPosition()
     {
         // Mettre à jour la position de l'icône à côté de l'objet
-        Vector3 iconPosition = transform.position + transform.right * 50f; // Vous pouvez ajuster le décalage ici
+
+        // Obtenir la position de l'objet par rapport à la caméra
+        Vector3 objectScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
+
+        // Déterminer si l'objet est à gauche ou à droite de l'écran
+        bool isObjectOnLeft = objectScreenPoint.x < Screen.width / 2;
+
+        // Calculer la position de l'icône en conséquence
+        Vector3 offset = isObjectOnLeft ? -transform.right * 80f : transform.right * 80f;
+        Vector3 iconPosition = transform.position + offset;
+
         pocketIconInstance.transform.position = iconPosition;
     }
+
 
     private void ShowPocketIcon()
     {
@@ -110,5 +120,10 @@ public class AddToPocket : MonoBehaviour
         {
             pocketIconInstance.SetActive(false);
         }
+    }
+
+    public void HideObject()
+    {
+        this.gameObject.SetActive(false);
     }
 }
