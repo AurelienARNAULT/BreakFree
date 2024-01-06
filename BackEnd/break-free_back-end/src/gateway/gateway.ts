@@ -85,4 +85,9 @@ export class MyGateway implements OnModuleInit {
       content: body,
     });
   }
+
+  @SubscribeMessage('objectCatched')
+  onObjectCatched(@MessageBody() body: any) {
+    console.log(body);
+  }
 }
