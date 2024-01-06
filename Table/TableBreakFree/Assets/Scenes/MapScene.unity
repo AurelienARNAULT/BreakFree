@@ -2777,6 +2777,7 @@ GameObject:
   - component: {fileID: 2050785688}
   - component: {fileID: 2050785687}
   - component: {fileID: 2050785686}
+  - component: {fileID: 2050785689}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -2834,6 +2835,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2050785689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050785685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da4254de9b074bacb6665197f8648ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomCollider: {fileID: 479078908}
+  roomCrimeTapes: {fileID: 289053570536459592}
+  socketManager: {fileID: 30808719}
 --- !u!1 &2102740737
 GameObject:
   m_ObjectHideFlags: 0
@@ -3106,9 +3122,11 @@ GameObject:
   - component: {fileID: 543450652167594754}
   - component: {fileID: 3469287838232112295}
   - component: {fileID: 1711813854506817645}
+  - component: {fileID: 3469287838232112297}
+  - component: {fileID: 3469287838232112296}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3163,6 +3181,31 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148447263160}
   m_Mesh: {fileID: 2619086233303812490, guid: d29d5b5fd2efd4019bf9f64b9afbb6dc, type: 3}
+--- !u!114 &3469287838232112296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148447263160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bba3a0ed35f64311bd27926c981b62c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &3469287838232112297
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148447263160}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.14010002, y: 2.0659997, z: 0.9741486}
+  m_Center: {x: 0.039749756, y: -5.7496796e-10, z: -6.2629535e-10}
 --- !u!4 &4195731798285535555
 Transform:
   m_ObjectHideFlags: 0
