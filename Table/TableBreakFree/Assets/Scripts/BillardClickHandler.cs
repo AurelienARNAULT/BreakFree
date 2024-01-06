@@ -36,7 +36,7 @@ public class BillardClickHandler : MonoBehaviour
                 if (clickedObject.name == "Billard")
                 {
                     // Votre code à exécuter lorsque l'objet est cliqué ou touché
-                    SceneManager.LoadScene(3);
+                    SceneManager.LoadScene(4);
                 }
             }
         }

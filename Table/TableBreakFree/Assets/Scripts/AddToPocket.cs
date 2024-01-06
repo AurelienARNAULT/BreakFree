@@ -22,7 +22,7 @@ public class AddToPocket : MonoBehaviour
         {
             iconClickHandler.message = this.gameObject.name + "SendToPocket";
             iconClickHandler.gobject = this.gameObject;
-            Debug.Log(iconClickHandler.message);
+            Debug.Log(iconClickHandler.gobject);
         }
     }
 

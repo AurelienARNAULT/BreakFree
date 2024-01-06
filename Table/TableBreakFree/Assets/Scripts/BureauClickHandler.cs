@@ -36,7 +36,7 @@ public class BureauClickHandler : MonoBehaviour
                 if (clickedObject.name == "Bureau (1)")
                 {
                     // Votre code à exécuter lorsque l'objet est cliqué ou touché
-                    SceneManager.LoadScene(2);
+                    SceneManager.LoadScene(3);
                 }
             }
         }

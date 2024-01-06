@@ -6,6 +6,20 @@ using UnityEngine.EventSystems;
 
 public class RetourMapScene : MonoBehaviour
 {
+    GameObject ObjectDice;
+    GameObject ObjectPaint;
+    GameObject ObjectKey;
+    GameObject ChambreCollider;
+
+
+    void Start()
+    {
+        ObjectDice = GameObject.Find("Dice");
+        ObjectPaint = GameObject.Find("Paint");
+        ObjectKey = GameObject.Find("Key");
+        ChambreCollider = GameObject.Find("ChambreCollider");
+    }
+
     void Update()
     {
         // Vérifier si l'utilisateur a appuyé sur la souris ou a touché l'écran
@@ -35,13 +49,26 @@ public class RetourMapScene : MonoBehaviour
 
                 if (clickedObject.name == "RetourMapScene")
                 {
-                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
-                    SceneManager.LoadScene(0);
-                }
-                if (clickedObject.name == "RetourSalonScene")
-                {
+                    if (ChambreCollider) PlayerPrefs.SetInt("PaintPresent", ChambreCollider.tag == "ChambreCollider" ? 2 : 1);
                     // Votre code à exécuter lorsque l'objet est cliqué ou touché
                     SceneManager.LoadScene(1);
+                }
+                if (clickedObject.name == "RetourSalonSceneFromBillard")
+                {
+                    if (ObjectPaint) PlayerPrefs.SetInt("PaintPresent", ObjectPaint.activeInHierarchy ? 2 : 1);
+                    if (ObjectDice)  PlayerPrefs.SetInt("DicePresent", ObjectDice.activeInHierarchy ? 2 : 1);
+
+                    PlayerPrefs.Save();
+                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
+                    SceneManager.LoadScene(2);
+                }
+                if (clickedObject.name == "RetourSalonSceneFromBureau")
+                {
+                    if (ObjectKey) PlayerPrefs.SetInt("KeyPresent", ObjectKey.activeInHierarchy ? 2 : 1);
+
+                    PlayerPrefs.Save();
+                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
+                    SceneManager.LoadScene(2);
                 }
             }
         }

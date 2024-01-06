@@ -67,12 +67,12 @@ public class MoveCharacter : MonoBehaviour
 
             else if (inSalon)
             {
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(2);
             }
 
             else if (inChambre)
             {
-                SceneManager.LoadScene(3);
+                SceneManager.LoadScene(5);
             }
         }
     }

@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 247838250}
   - component: {fileID: 247838249}
   m_Layer: 0
-  m_Name: RetourSalonScene
+  m_Name: RetourSalonSceneFromBureau
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,7 +226,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247838248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4511, y: 518, z: 8}
+  m_LocalPosition: {x: 4511, y: 518, z: 14}
   m_LocalScale: {x: 200, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -997,6 +997,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pocketIconPrefab: {fileID: 1304620099942253952, guid: 24936902f73a6c944a99ad4e438bc375, type: 3}
+--- !u!114 &1434234200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434234174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af655e6673de1744bbd699b34b10a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1650081524
 GameObject:
   m_ObjectHideFlags: 0

@@ -285,7 +285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6871990578716197019, guid: 3a83d1b770fe0e34ea0ec9f13369f5fd, type: 3}
       propertyPath: m_Name
-      value: Dice_d6_Plastic Glossy Pure red
+      value: Dice
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a83d1b770fe0e34ea0ec9f13369f5fd, type: 3}
@@ -406,6 +406,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pocketIconPrefab: {fileID: 1304620099942253952, guid: 24936902f73a6c944a99ad4e438bc375, type: 3}
+--- !u!114 &151168137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151168126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb00703f171386b4b84c727a4a9dab2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &695180687
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,6 +960,18 @@ MonoBehaviour:
   onSelectedSelectFingerUp:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1361985832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361985823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09990e550bdf77a4bb5b2af53eb27141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1381966602
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,7 +1148,7 @@ GameObject:
   - component: {fileID: 1567311810}
   - component: {fileID: 1567311809}
   m_Layer: 0
-  m_Name: RetourSalonScene
+  m_Name: RetourSalonSceneFromBillard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
