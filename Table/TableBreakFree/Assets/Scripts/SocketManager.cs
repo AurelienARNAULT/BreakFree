@@ -9,6 +9,8 @@ public class SocketManager : MonoBehaviour
     public SocketIOUnity socket;
     public string serverUrlLink = "http://localhost:3000";
 
+    private string currentObject = null;
+
     // Singleton pattern
     private static SocketManager instance;
     public static SocketManager Instance { get { return instance; } }
@@ -72,6 +74,7 @@ public class SocketManager : MonoBehaviour
                 string name = contentObject["name"].ToString();
 
                 Debug.Log("name : " + name);
+                this.currentObject = name;
                 Debug.Log("message : " + message);
             }
             catch (Exception ex)
@@ -96,6 +99,16 @@ public class SocketManager : MonoBehaviour
     public void SendSocket(string eventName, string body)
     {
         socket.EmitAsync(eventName, body);
+    }
+
+    public string GetCurrentObject()
+    {
+        return this.currentObject;
+    }
+
+    public void SetCurrentObject(string currentObject)
+    {
+        this.currentObject = currentObject;
     }
 
     void OnDestroy()
