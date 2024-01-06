@@ -20,7 +20,8 @@ public class AddToPocket : MonoBehaviour
             Debug.LogError("IconClickHandler script not found on pocketIconInstance!");
         } else
         {
-            iconClickHandler.message = this.gameObject.name + "SendToPocket";
+            iconClickHandler.message = this.gameObject.name;// + "SendToPocket";
+            Debug.Log(iconClickHandler.message);
         }
     }
 
@@ -30,7 +31,7 @@ public class AddToPocket : MonoBehaviour
         {
             touchDuration += Time.deltaTime;
 
-            // Mettre à jour la position de l'icône pendant le déplacement
+            // Mettre ï¿½ jour la position de l'icï¿½ne pendant le dï¿½placement
             if (!(LeanTouch.Fingers[0].ScreenDelta.magnitude > 0f) && touchDuration >= 2f)
             {
                 UpdatePocketIconPosition();
@@ -72,12 +73,12 @@ public class AddToPocket : MonoBehaviour
         {
             isTouching = true;
 
-            // Position de l'icône à côté de l'objet
+            // Position de l'icï¿½ne ï¿½ cï¿½tï¿½ de l'objet
             UpdatePocketIconPosition();
         }
         else
         {
-            // Cacher l'icône si le doigt ne touche ni l'objet ni l'icône
+            // Cacher l'icï¿½ne si le doigt ne touche ni l'objet ni l'icï¿½ne
             //HidePocketIcon();
         }
     }
@@ -90,15 +91,15 @@ public class AddToPocket : MonoBehaviour
 
     private void UpdatePocketIconPosition()
     {
-        // Mettre à jour la position de l'icône à côté de l'objet
+        // Mettre ï¿½ jour la position de l'icï¿½ne ï¿½ cï¿½tï¿½ de l'objet
 
-        // Obtenir la position de l'objet par rapport à la caméra
+        // Obtenir la position de l'objet par rapport ï¿½ la camï¿½ra
         Vector3 objectScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
 
-        // Déterminer si l'objet est à gauche ou à droite de l'écran
+        // Dï¿½terminer si l'objet est ï¿½ gauche ou ï¿½ droite de l'ï¿½cran
         bool isObjectOnLeft = objectScreenPoint.x < Screen.width / 2;
 
-        // Calculer la position de l'icône en conséquence
+        // Calculer la position de l'icï¿½ne en consï¿½quence
         Vector3 offset = isObjectOnLeft ? -transform.right * 80f : transform.right * 80f;
         Vector3 iconPosition = transform.position + offset;
 
