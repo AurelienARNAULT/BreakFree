@@ -10,9 +10,19 @@ public class MoveCharacter : MonoBehaviour
     private bool inChambre = false;
 
 
+    GameObject ChambreCollider;
+    GameObject Door;
+    GameObject CrimeDoNotCross;
+
+
     void Start()
     {
         positionOrigine = transform.position;
+
+
+        ChambreCollider = GameObject.Find("ChambreCollider");
+        Door = GameObject.Find("Door");
+        CrimeDoNotCross = GameObject.Find("CrimeChambre");
     }
 
     void OnTriggerEnter(Collider other)
@@ -67,11 +77,51 @@ public class MoveCharacter : MonoBehaviour
 
             else if (inSalon)
             {
+                if (ChambreCollider) PlayerPrefs.SetInt("ChambreOpen", ChambreCollider.tag == "ChambreCollider" ? 2 : 1);
+                if (CrimeDoNotCross) PlayerPrefs.SetInt("CrimePresent", CrimeDoNotCross.activeInHierarchy ? 2 : 1);
+                if (Door)
+                {
+                    Transform doorTransform = Door.transform;
+                    Vector3 rotation = doorTransform.rotation.eulerAngles;
+
+                    PlayerPrefs.SetFloat("DoorRotationX", rotation.x);
+                    PlayerPrefs.SetFloat("DoorRotationY", rotation.y);
+                    PlayerPrefs.SetFloat("DoorRotationZ", rotation.z);
+
+                    Vector3 position = doorTransform.position;
+
+                    PlayerPrefs.SetFloat("DoorPositionX", position.x);
+                    PlayerPrefs.SetFloat("DoorPositionY", position.y);
+                    PlayerPrefs.SetFloat("DoorPositionZ", position.z);
+                }
+
+                PlayerPrefs.Save();
+
                 SceneManager.LoadScene(2);
             }
 
             else if (inChambre)
             {
+                if (ChambreCollider) PlayerPrefs.SetInt("ChambreOpen", ChambreCollider.tag == "ChambreCollider" ? 2 : 1);
+                if (CrimeDoNotCross) PlayerPrefs.SetInt("CrimePresent", CrimeDoNotCross.activeInHierarchy ? 2 : 1);
+                if (Door)
+                {
+                    Transform doorTransform = Door.transform;
+                    Vector3 rotation = doorTransform.rotation.eulerAngles;
+
+                    PlayerPrefs.SetFloat("DoorRotationX", rotation.x);
+                    PlayerPrefs.SetFloat("DoorRotationY", rotation.y);
+                    PlayerPrefs.SetFloat("DoorRotationZ", rotation.z);
+
+                    Vector3 position = doorTransform.position;
+
+                    PlayerPrefs.SetFloat("DoorPositionX", position.x);
+                    PlayerPrefs.SetFloat("DoorPositionY", position.y);
+                    PlayerPrefs.SetFloat("DoorPositionZ", position.z);
+                }
+
+                PlayerPrefs.Save();
+
                 SceneManager.LoadScene(5);
             }
         }
