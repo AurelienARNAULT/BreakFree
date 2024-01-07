@@ -474,7 +474,7 @@ GameObject:
   - component: {fileID: 1406723549}
   - component: {fileID: 1406723548}
   m_Layer: 0
-  m_Name: RetourMapScene (2)
+  m_Name: RetourMapScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -888,5 +888,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da4254de9b074bacb6665197f8648ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomCollider: {fileID: 0}
-  roomCrimeTapes: {fileID: 0}
