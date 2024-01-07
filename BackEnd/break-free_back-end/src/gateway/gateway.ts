@@ -67,9 +67,17 @@ export class MyGateway implements OnModuleInit {
   @SubscribeMessage('objectUsed')
   onObjectUsed(@MessageBody() body: any) {
     console.log(body);
-    console.log(body.name);
     this.server.emit('onObjectUsed', {
       msg: 'An object was used',
+      content: body,
+    });
+  }
+
+  @SubscribeMessage('wrongObject')
+  onWrongObject(@MessageBody() body: any) {
+    console.log(body);
+    this.server.emit('onWrongObject', {
+      msg: 'A wrong object was used',
       content: body,
     });
   }
