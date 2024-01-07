@@ -5,7 +5,14 @@ public class VanGoghClickHandler : MonoBehaviour
 
     void Start()
     {
-        SocketManager.Instance.SendSocket("vanGoghClick");
+        if (this.gameObject.name == "VanGogh (1)")
+        {
+            SocketManager.Instance.SendSocket("vanGoghClick");
+        }
+        else if (this.gameObject.name == "Tableau")
+        {
+            SocketManager.Instance.SendSocket("enterBedroom");
+        }
     }
     void Update()
     {

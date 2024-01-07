@@ -5,7 +5,6 @@ using UnityEngine;
 public class ObjectManager : MonoBehaviour
 {
     Collider roomCollider;
-
     GameObject roomCrimeTapes;
 
     void Start()

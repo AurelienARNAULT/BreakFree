@@ -48,11 +48,7 @@ public class RetourMapScene : MonoBehaviour
                 if (clickedObject.name == "RetourMapScene")
                 {
                     
-                    // Votre code � ex�cuter lorsque l'objet est cliqu� ou touch�
-                    if (SceneManager.GetActiveScene().name == "SalonScene")
-                    {
-                        SocketManager.Instance.SendSocket("leaveSalon", "{\"msg\":\"leaving the salon\"}");
-                    }
+                    SocketManager.Instance.SendSocket("leaveRoom", "{\"msg\":\"leaving the room\"}");
                     SceneManager.LoadScene(1);
                 }
                 if (clickedObject.name == "RetourSalonSceneFromBillard")
