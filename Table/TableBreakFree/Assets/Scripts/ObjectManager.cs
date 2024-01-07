@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
-    public Collider roomCollider;
+    Collider roomCollider;
 
-    public GameObject roomCrimeTapes;
+    GameObject roomCrimeTapes;
 
+    void Start()
+    {
+        roomCrimeTapes = GameObject.Find("CrimeChambre");
+        roomCollider = GameObject.Find("ChambreCollider").GetComponent<Collider>();
+    }
 
     void Update()
     {
