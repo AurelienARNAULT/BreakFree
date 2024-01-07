@@ -48,7 +48,7 @@ public class IconClickHandler : MonoBehaviour
             {
                 // Objet cliqué ou touché
                 GameObject clickedObject = hit.collider.gameObject;
-                if (clickedObject)
+                if (clickedObject == this.gameObject)
                 {
                     Debug.Log("PocheIcon clicked");
                     // Votre code à exécuter lorsque l'objet est cliqué ou touché

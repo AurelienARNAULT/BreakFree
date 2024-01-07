@@ -70,7 +70,7 @@ public class AddToPocket : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(finger.ScreenPosition);
 
-        if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
+        if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject == gameObject || hit.collider.gameObject == pocketIconInstance))
         {
             isTouching = true;
 
@@ -80,7 +80,7 @@ public class AddToPocket : MonoBehaviour
         else
         {
             // Cacher l'ic�ne si le doigt ne touche ni l'objet ni l'ic�ne
-            //HidePocketIcon();
+            HidePocketIcon();
         }
     }
 
@@ -101,7 +101,7 @@ public class AddToPocket : MonoBehaviour
         bool isObjectOnLeft = objectScreenPoint.x < Screen.width / 2;
 
         // Calculer la position de l'ic�ne en cons�quence
-        Vector3 offset = isObjectOnLeft ? -transform.right * 80f : transform.right * 80f;
+        Vector3 offset = isObjectOnLeft ? -transform.right * 100f : transform.right * 100f;
         Vector3 iconPosition = transform.position + offset;
 
         pocketIconInstance.transform.position = iconPosition;
