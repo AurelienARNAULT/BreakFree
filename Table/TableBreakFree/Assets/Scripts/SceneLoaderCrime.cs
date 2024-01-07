@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoaderChambre : MonoBehaviour
+public class SceneLoaderCrime : MonoBehaviour
 {
-
     void Start()
     {
         LoadSavedScene();
@@ -11,26 +10,23 @@ public class SceneLoaderChambre : MonoBehaviour
 
     void LoadSavedScene()
     {
-        if (PlayerPrefs.HasKey("ChambreOpen"))
+        if (PlayerPrefs.HasKey("CrimePresent"))
         {
-            SetChambreOpen(PlayerPrefs.GetInt("ChambreOpen", 2) != 1);
+            Debug.Log("HasKey");
+            SetObjectPresence(PlayerPrefs.GetInt("CrimePresent", 2) != 1);
         }
         else
         {
+            Debug.Log("SetInitial");
             SetInitialObjectState();
         }
     }
 
-    void SetChambreOpen(bool isOpen)
+    void SetObjectPresence(bool isPresent)
     {
-        if (isOpen)
-        {
-            this.gameObject.tag = "ChambreCollider";
-        }
-        else
-        {
-            this.gameObject.tag = "PieceInterdite";
-        }
+        Debug.Log(isPresent);
+
+        this.gameObject.SetActive(isPresent);
     }
 
     void SetInitialObjectState()

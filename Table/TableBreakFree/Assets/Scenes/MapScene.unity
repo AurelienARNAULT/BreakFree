@@ -800,7 +800,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5886eac7579239b4ba06ddec5c34ccde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object1: {fileID: 479078907}
 --- !u!1 &560361499
 GameObject:
   m_ObjectHideFlags: 0
@@ -3199,8 +3198,9 @@ GameObject:
   - component: {fileID: 697294096355303110}
   - component: {fileID: 5695442540911107730}
   - component: {fileID: 5174584720536792264}
+  - component: {fileID: 5695442540911107731}
   m_Layer: 0
-  m_Name: CrimeTapeMedium
+  m_Name: CrimeChambre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3249,6 +3249,7 @@ GameObject:
   - component: {fileID: 1711813854506817645}
   - component: {fileID: 3469287838232112297}
   - component: {fileID: 3469287838232112296}
+  - component: {fileID: 3469287838232112298}
   m_Layer: 0
   m_Name: Door
   m_TagString: Door
@@ -3331,6 +3332,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.14010002, y: 2.0659997, z: 0.9741486}
   m_Center: {x: 0.039749756, y: -5.7496796e-10, z: -6.2629535e-10}
+--- !u!114 &3469287838232112298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148447263160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249d44fb58f816745b9a324c8890c007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4195731798285535555
 Transform:
   m_ObjectHideFlags: 0
@@ -3396,6 +3409,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289053570536459592}
   m_Mesh: {fileID: 6637501468455666657, guid: f99e33c594d124d1daec0c131b422e05, type: 3}
+--- !u!114 &5695442540911107731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289053570536459592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 362e967984f8ad549a7dea26d65e2333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6146431397387526245
 GameObject:
   m_ObjectHideFlags: 0

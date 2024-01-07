@@ -10,6 +10,8 @@ public class RetourMapScene : MonoBehaviour
     GameObject ObjectPaint;
     GameObject ObjectKey;
     GameObject ChambreCollider;
+    GameObject Door;
+    GameObject CrimeDoNotCross;
 
 
     void Start()
@@ -18,6 +20,8 @@ public class RetourMapScene : MonoBehaviour
         ObjectPaint = GameObject.Find("Paint");
         ObjectKey = GameObject.Find("Key");
         ChambreCollider = GameObject.Find("ChambreCollider");
+        Door = GameObject.Find("Door");
+        CrimeDoNotCross = GameObject.Find("CrimeChambre");
     }
 
     void Update()
@@ -49,7 +53,26 @@ public class RetourMapScene : MonoBehaviour
 
                 if (clickedObject.name == "RetourMapScene")
                 {
-                    if (ChambreCollider) PlayerPrefs.SetInt("PaintPresent", ChambreCollider.tag == "ChambreCollider" ? 2 : 1);
+                    if (ChambreCollider) PlayerPrefs.SetInt("ChambreOpen", ChambreCollider.tag == "ChambreCollider" ? 2 : 1);
+                    if (CrimeDoNotCross) PlayerPrefs.SetInt("CrimePresent", CrimeDoNotCross.activeInHierarchy ? 2 : 1);
+                    if (Door)
+                    {
+                        Transform doorTransform = Door.transform;
+                        Vector3 rotation = doorTransform.rotation.eulerAngles;
+
+                        PlayerPrefs.SetFloat("DoorRotationX", rotation.x);
+                        PlayerPrefs.SetFloat("DoorRotationY", rotation.y);
+                        PlayerPrefs.SetFloat("DoorRotationZ", rotation.z);
+
+                        Vector3 position = doorTransform.position;
+
+                        PlayerPrefs.SetFloat("DoorPositionX", position.x);
+                        PlayerPrefs.SetFloat("DoorPositionY", position.y);
+                        PlayerPrefs.SetFloat("DoorPositionZ", position.z);
+                    }
+
+                    PlayerPrefs.Save();
+
                     // Votre code à exécuter lorsque l'objet est cliqué ou touché
                     SceneManager.LoadScene(1);
                 }
