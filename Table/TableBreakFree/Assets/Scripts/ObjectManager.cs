@@ -38,7 +38,7 @@ public class ObjectManager : MonoBehaviour
                     clickedObject.GetComponent<DoorManager>().OpenDoor();
                     roomCollider.tag = "ChambreCollider";
                     roomCrimeTapes.SetActive(false);
-                    socketManager.SendSocket("objectUsed", "{\"name\":\"" + socketManager.GetCurrentObject() + "\"}");  
+                    socketManager.SendSocket("removeObject", "{\"name\":\"" + socketManager.GetCurrentObject() + "\"}");  
                 }else
                 {
                     Debug.Log("Wrong object");
