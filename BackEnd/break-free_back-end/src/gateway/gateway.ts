@@ -60,7 +60,6 @@ export class MyGateway implements OnModuleInit {
     console.log(body);
     this.server.emit('onObjectSentToPocket', {
       msg: 'An object was sent to the pocket',
-      name: body.name,
       content: body,
     });
   }
@@ -68,20 +67,26 @@ export class MyGateway implements OnModuleInit {
   @SubscribeMessage('objectUsed')
   onObjectUsed(@MessageBody() body: any) {
     console.log(body);
-    console.log(body.name);
     this.server.emit('onObjectUsed', {
       msg: 'An object was used',
-      name: body.name,
       content: body,
     });
   }
 
-  @SubscribeMessage('objectDropped')
-  onObjectDropped(@MessageBody() body: any) {
+  @SubscribeMessage('wrongObject')
+  onWrongObject(@MessageBody() body: any) {
     console.log(body);
-    this.server.emit('onObjectDropped', {
-      msg: 'An object was dropped',
-      name: body.name,
+    this.server.emit('onWrongObject', {
+      msg: 'A wrong object was used',
+      content: body,
+    });
+  }
+
+  @SubscribeMessage('removeObject')
+  onRemoveObject(@MessageBody() body: any) {
+    console.log(body);
+    this.server.emit('onRemoveObject', {
+      msg: 'An object was removed',
       content: body,
     });
   }

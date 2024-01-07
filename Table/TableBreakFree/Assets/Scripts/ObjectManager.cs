@@ -33,12 +33,12 @@ public class ObjectManager : MonoBehaviour
                 GameObject clickedObject = hit.collider.gameObject;
 
                 Debug.Log(clickedObject.tag);
-                if (clickedObject.tag== "Door" && socketManager.GetCurrentObject() == "Key")
+                if (clickedObject.tag.ToLower() == "door" && socketManager.GetCurrentObject().ToLower() == "key")
                 {
                     clickedObject.GetComponent<DoorManager>().OpenDoor();
                     roomCollider.tag = "ChambreCollider";
                     roomCrimeTapes.SetActive(false);
-                    socketManager.SendSocket("objectUsed", "{\"name\":\"" + socketManager.GetCurrentObject() + "\"}");  
+                    socketManager.SendSocket("removeObject", "{\"name\":\"" + socketManager.GetCurrentObject() + "\"}");  
                 }else
                 {
                     Debug.Log("Wrong object");
