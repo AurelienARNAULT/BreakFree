@@ -14,7 +14,10 @@ sent = False
 active = False
 transitioning = False
 transition_progress = 0
-transition_speed = 0.5  # Vitesse de la transition
+transition_speed = 1  # Vitesse de la transition
+bedRoom = False
+
+current_image_path = 'assets/sprits/tableau.jpg'
 
 # Tenter de se connecter au serveur
 attempt = 0
@@ -36,18 +39,50 @@ else:
 def onVanGoghClick(data):
     global active
     global transitioning
+    global bedRoom
+    global current_image_path
+    global fond_original
+    global facteur_luminosite
+    global transition_progress
     if not active:
+        transition_progress = 0
         transitioning = True
         active = True
+        bedRoom = False
+        current_image_path = 'assets/sprits/tableau.jpg'
+        fond_original = pygame.image.load(current_image_path)  # Charger la nouvelle image
+        fond_original = pygame.transform.scale(fond_original, (width, height))  # Redimensionner l'image
+        facteur_luminosite = 0.10
         print('onVanGoghClick', data)
-    
-@sio.on('onLeaveSalon') # Décorateur pour gérer l'événement 'onLeaveOffice'
-def onLeaveSalon(data):
+
+@sio.on('onEnterBedroom') # Décorateur pour gérer l'événement 'onBedRoomClick'
+def onEnterBedroom(data):
     global active
     global transitioning
+    global bedRoom
+    global current_image_path
+    global fond_original  # Ajoutez cette ligne si vous souhaitez mettre à jour fond_original directement ici
+    global facteur_luminosite
+    global transition_progress
+    if not active:
+        transition_progress = 0
+        transitioning = True
+        active = True
+        bedRoom = False
+        current_image_path = 'assets/sprits/tableauChambre.jpg'
+        fond_original = pygame.image.load(current_image_path)  # Charger la nouvelle image
+        fond_original = pygame.transform.scale(fond_original, (width, height))  # Redimensionner l'image
+        facteur_luminosite = 1.0  # Réinitialiser le facteur de luminosité
+
+@sio.on('onLeaveRoom') # Décorateur pour gérer l'événement 'onLeaveOffice'
+def onLeaveRoom(data):
+    global active
+    global transitioning
+    global bedRoom
     transitioning = False
     active = False
-    print('onLeaveSalon', data)
+    bedRoom = False
+    print('onLeaveRoom', data)
 
 def ajuster_luminosite(image, facteur):
     # Convertir l'image en un tableau numpy
@@ -88,7 +123,7 @@ infoObject = pygame.display.Info()
 width, height = infoObject.current_w, infoObject.current_h
 
 # Paramètres de l'image et de la fenêtre
-chemin_image = 'assets/sprits/tableau.jpg'
+chemin_image = current_image_path
 fond_original = pygame.image.load(chemin_image)
 original_width, original_height = fond_original.get_size()
 
@@ -161,6 +196,19 @@ while running:
                 transitioning = False
         
         screen.fill(color)
+        pygame.display.flip()
+
+    elif bedRoom:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+        screen.blit(fond_original, (0, 0))
+
+        if False:
+            screen.blit(curved_arrow_sprit, (sprite_x, sprite_y))
         pygame.display.flip()
     else:
         for event in pygame.event.get():
