@@ -16,6 +16,7 @@ transitioning = False
 transition_progress = 0
 transition_speed = 1  # Vitesse de la transition
 bedRoom = False
+scanned = False
 
 current_image_path = 'assets/sprits/tableau.jpg'
 
@@ -68,11 +69,17 @@ def onEnterBedroom(data):
         transition_progress = 0
         transitioning = True
         active = True
-        bedRoom = False
+        bedRoom = True
         current_image_path = 'assets/sprits/tableauChambre.jpg'
         fond_original = pygame.image.load(current_image_path)  # Charger la nouvelle image
         fond_original = pygame.transform.scale(fond_original, (width, height))  # Redimensionner l'image
         facteur_luminosite = 1.0  # Réinitialiser le facteur de luminosité
+
+@sio.on('onScanned') # Gestionnaire d'événement pour 'onScanned'
+def onScanned(data):
+    global scanned
+    scanned = True
+    print('onScanned', data)
 
 @sio.on('onLeaveRoom') # Décorateur pour gérer l'événement 'onLeaveOffice'
 def onLeaveRoom(data):
@@ -199,7 +206,6 @@ while running:
         
         screen.fill(color)
         pygame.display.flip()
-
     elif bedRoom:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -209,8 +215,18 @@ while running:
                     running = False
         screen.blit(fond_original, (0, 0))
 
-        if False:
-            screen.blit(curved_arrow_sprit, (sprite_x, sprite_y))
+        if scanned:
+            font_size = 75
+            font = pygame.font.SysFont(None, font_size)
+            if not font:
+                print("Failed to load font.")
+            text = font.render("Scanned Successfully!", True, (255, 255, 255))
+            text_rect = text.get_rect(center=(width / 2, height / 2))
+
+            background_rect = text_rect.inflate(20, 10)
+            pygame.draw.rect(screen, (255, 0, 0), background_rect)
+            screen.blit(text, text_rect)
+
         pygame.display.flip()
     else:
         for event in pygame.event.get():

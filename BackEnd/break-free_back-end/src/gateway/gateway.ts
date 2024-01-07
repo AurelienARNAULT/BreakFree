@@ -73,6 +73,15 @@ export class MyGateway implements OnModuleInit {
     });
   }
 
+  @SubscribeMessage('scanned')
+  async onScanned(@MessageBody() body: any) {
+    console.log(body);
+    this.server.emit('onScanned', {
+      msg: 'The user scanned',
+      content: body,
+    });
+  }
+
   @SubscribeMessage('objectSentToPocket')
   onObjectSentToPocket(@MessageBody() body: any) {
     console.log(body);
