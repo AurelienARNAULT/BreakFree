@@ -5,31 +5,36 @@ import {
     TouchableOpacity,
     StyleSheet,
     ImageBackground,
-    ScrollView,
+    ScrollView, Image, ImageSourcePropType,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 type ListItemProps = {
+    id: string;
     title: string;
     subTitle: string;
     onSelect: () => void;
     isSelected: boolean;
+    img: ImageSourcePropType;
 };
 
 
-const ListItem: React.FC<ListItemProps> = ({title, subTitle, onSelect, isSelected}) => {
+const ListItem: React.FC<ListItemProps> = (listItemProps) => {
     return (
-        <TouchableOpacity onPress={onSelect} style={styles.TouchableOpacity}>
-            <View style={[styles.verticalBar, { backgroundColor: isSelected ?  '#a6600f' : '#413906'}]} />
+        <TouchableOpacity onPress={listItemProps.onSelect} style={styles.TouchableOpacity}>
+            <View style={[styles.verticalBar, {backgroundColor: listItemProps.isSelected ? '#a6600f' : '#413906'}]}/>
             <LinearGradient
-                colors={isSelected ? ['rgba(78, 50, 0, 0.8)', 'rgba(0, 78, 50, 0)'] : ['rgba(78, 50, 0, 0.2)', 'rgba(78, 50, 0, 0)']} // Utilisez les props ici
+                colors={listItemProps.isSelected ? ['rgba(78, 50, 0, 0.8)', 'rgba(0, 78, 50, 0)'] : ['rgba(78, 50, 0, 0.2)', 'rgba(78, 50, 0, 0)']} // Utilisez les props ici
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 0}}
                 style={styles.gradientBackground}
             >
+                <Image source={listItemProps.img} style={styles.img}></Image>
                 <View style={styles.content}>
-                    <Text style={[styles.title, isSelected ? styles.selectedTitle : styles.unselectedTitle ]}>{title}</Text>
-                    <Text style={[styles.subTitle, isSelected ? styles.selectedText : styles.unselectedText]}>{subTitle}</Text>
+                    <Text
+                        style={[styles.title, listItemProps.isSelected ? styles.selectedTitle : styles.unselectedTitle]}>{listItemProps.title}</Text>
+                    <Text
+                        style={[styles.subTitle, listItemProps.isSelected ? styles.selectedText : styles.unselectedText]}>{listItemProps.subTitle}</Text>
                 </View>
             </LinearGradient>
         </TouchableOpacity>
@@ -38,18 +43,34 @@ const ListItem: React.FC<ListItemProps> = ({title, subTitle, onSelect, isSelecte
 
 const Enigme = () => {
 
-    const items = [];
+    const items: ListItemProps[] = [];
     const numberOfItems = 13; // Le nombre d'éléments que vous voulez créer
 
+    const imgs = [
+        require('../ressources/loupe.png'),
+        require('../ressources/nuit.jpg')
+    ];
+
     for (let i = 1; i <= numberOfItems; i++) {
+        const randomImgIndex = i % 2 === 0 ? 0 : 1;
+        let id = `item${i}`;
         items.push({
-            id: `item${i}`,
+            id: id,
             title: `Titre ${i}`,
-            subTitle: `Sous-titre ${i}`
+            subTitle: `Sous-titre ${i}`,
+            isSelected: false,
+            onSelect: () => {
+                const foundItem = items.find(item => item.id === id);
+                if (foundItem) {
+                    setSelectedItem(foundItem);
+                }
+            },
+            img: imgs[randomImgIndex]
+
         });
     }
 
-    const [selectedItem, setSelectedItem] = useState<string>(items[0].id || '');
+    let [selectedItem, setSelectedItem] = useState<ListItemProps>(items[0] || '');
 
 
     return (
@@ -63,11 +84,10 @@ const Enigme = () => {
                     <ScrollView persistentScrollbar={true}>
                         {items.map((item) => (
                             <ListItem
+                                {...item}
                                 key={item.id}
-                                title={item.title}
-                                subTitle={item.subTitle}
-                                onSelect={() => setSelectedItem(item.id)}
-                                isSelected={selectedItem === item.id}
+                                isSelected={selectedItem.id === item.id}
+                                onSelect={() => setSelectedItem(item)}
                             />
                         ))}
                     </ScrollView>
@@ -75,9 +95,12 @@ const Enigme = () => {
                 <View style={styles.detailSection}>
                     {selectedItem && (
                         <>
-                            <Text style={styles.detailTitle}>{selectedItem} Titre</Text>
+                            <View style={styles.detailTitleContent}>
+                                <Text style={styles.detailTitle}>{selectedItem.title}</Text>
+                                <Image source={selectedItem.img} style={styles.imgTitle}></Image>
+                            </View>
                             <Text style={styles.detailDescription}>
-                                Description de {selectedItem}
+                                Description de {selectedItem.subTitle}
                             </Text>
                         </>
                     )}
@@ -132,8 +155,7 @@ const styles = StyleSheet.create({
     },
     detailTitle: {
         color: 'white',
-        fontSize: 30,
-        paddingBottom: 30,
+        fontSize: 40,
     },
     detailDescription: {
         color: 'white',
@@ -159,10 +181,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.8)', // Noir avec 50% d'opacité
     },
     gradientBackground: {
-        padding: 10, // Ajustez selon vos besoins
+        padding: 10,
         width: '100%',
         justifyContent: 'flex-start',
-        // autres styles pour le LinearGradient
+        alignItems: 'center',
+        flexDirection: 'row',
     },
     verticalBar: {
         width: 5, // Largeur de la barre
@@ -184,6 +207,22 @@ const styles = StyleSheet.create({
     unselectedTitle: {
         color: 'rgba(255,255,255,0.7)',
         fontWeight: '100',
+    },
+    img: {
+        width: 50,
+        height: 50,
+        marginRight: 10,
+    },
+    imgTitle : {
+        width: 85,
+        height: 85,
+        marginRight: 10,
+    },
+    detailTitleContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingBottom: 50,
     },
 });
 

@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import socket from '../socket/socket'
 
 const Scanner = () => {
+
+    useEffect(() => {
+        socket.emit('scanned')
+    }, []);
+
   return (
     <View style={styles.container}>
       <RNCamera

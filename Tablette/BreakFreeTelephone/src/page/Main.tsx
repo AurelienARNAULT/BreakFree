@@ -47,19 +47,19 @@ const App = ({navigation}: { navigation: Main2NavigationProp }) => {
 
     const buttons = [
         {
-            source: require('../ressources/Poche.png'),
+            source: require('../ressources/acceuil/Poche.png'),
             onPress: () => navigation.navigate('Poche'),
         },
         {
-            source: require('../ressources/Enigme.png'),
+            source: require('../ressources/acceuil/Enigme.png'),
             onPress: () => navigation.navigate('Enigme'),
         },
         {
-            source: require('../ressources/histoire_bouton.png'),
+            source: require('../ressources/acceuil/histoire_bouton.png'),
             onPress: () => navigation.navigate('Histoire'),
         },
         {
-            source: require('../ressources/Scanner.png'),
+            source: require('../ressources/acceuil/Scanner.png'),
             onPress: () => navigation.navigate('Scanner'),
         },
     ];
