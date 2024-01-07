@@ -673,7 +673,6 @@ GameObject:
   - component: {fileID: 479078908}
   - component: {fileID: 479078912}
   - component: {fileID: 479078914}
-  - component: {fileID: 479078913}
   m_Layer: 0
   m_Name: ChambreCollider
   m_TagString: PieceInterdite
@@ -775,19 +774,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &479078913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479078907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c490ca1559951a478f9d38c7df91fff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Object1: {fileID: 479078907}
 --- !u!114 &479078914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2973,7 +2959,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomCollider: {fileID: 479078908}
   roomCrimeTapes: {fileID: 289053570536459592}
-  socketManager: {fileID: 30808719}
 --- !u!1 &2102740737
 GameObject:
   m_ObjectHideFlags: 0
