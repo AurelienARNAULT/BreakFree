@@ -33,8 +33,7 @@ public class ObjectManager : MonoBehaviour
                 GameObject clickedObject = hit.collider.gameObject;
 
                 Debug.Log(clickedObject.tag);
-                if (clickedObject.tag.Equals("Door", StringComparison.OrdinalIgnoreCase) &&
-                    socketManager.GetCurrentObject().Equals("Key", StringComparison.OrdinalIgnoreCase))
+                if (clickedObject.tag.ToLower() == "door" && socketManager.GetCurrentObject().ToLower() == "key")
                 {
                     clickedObject.GetComponent<DoorManager>().OpenDoor();
                     roomCollider.tag = "ChambreCollider";
