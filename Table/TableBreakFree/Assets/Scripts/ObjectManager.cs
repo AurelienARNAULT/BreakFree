@@ -8,7 +8,6 @@ public class ObjectManager : MonoBehaviour
 
     public GameObject roomCrimeTapes;
 
-    public SocketManager socketManager;
 
     void Update()
     {
@@ -28,23 +27,23 @@ public class ObjectManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(clickPosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit) && socketManager.GetCurrentObject() != null)
+            if (Physics.Raycast(ray, out hit) && SocketManager.Instance.GetCurrentObject() != null)
             {
                 GameObject clickedObject = hit.collider.gameObject;
 
                 Debug.Log(clickedObject.tag);
-                if (clickedObject.tag.ToLower() == "door" && socketManager.GetCurrentObject().ToLower() == "key")
+                if (clickedObject.tag.ToLower() == "door" && SocketManager.Instance.GetCurrentObject().ToLower() == "key")
                 {
                     clickedObject.GetComponent<DoorManager>().OpenDoor();
                     roomCollider.tag = "ChambreCollider";
                     roomCrimeTapes.SetActive(false);
-                    socketManager.SendSocket("removeObject", "{\"name\":\"" + socketManager.GetCurrentObject() + "\"}");  
+                    SocketManager.Instance.SendSocket("removeObject", "{\"name\":\"" + SocketManager.Instance.GetCurrentObject() + "\"}");  
                 }else
                 {
                     Debug.Log("Wrong object");
-                    socketManager.SendSocket("wrongObject", "{\"name\":\"" + socketManager.GetCurrentObject() + "\"}");
+                    SocketManager.Instance.SendSocket("wrongObject", "{\"name\":\"" + SocketManager.Instance.GetCurrentObject() + "\"}");
                 }
-                socketManager.SetCurrentObject(null);
+                SocketManager.Instance.SetCurrentObject(null);
             }
         }
     }

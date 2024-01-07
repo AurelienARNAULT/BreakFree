@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class VanGoghClickHandler : MonoBehaviour
 {
+
+    void Start()
+    {
+        SocketManager.Instance.SendSocket("vanGoghClick");
+    }
     void Update()
     {
-        // Vérifier si l'utilisateur a appuyé sur la souris ou a touché l'écran
+        // Vï¿½rifier si l'utilisateur a appuyï¿½ sur la souris ou a touchï¿½ l'ï¿½cran
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             // Obtenir la position du clic ou du toucher
@@ -23,21 +28,21 @@ public class VanGoghClickHandler : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(clickPosition);
             RaycastHit hit;
 
-            // Vérifier si le rayon intersecte un objet dans la scène
+            // Vï¿½rifier si le rayon intersecte un objet dans la scï¿½ne
             if (Physics.Raycast(ray, out hit))
             {
-                // Objet cliqué ou touché
+                // Objet cliquï¿½ ou touchï¿½
                 GameObject clickedObject = hit.collider.gameObject;
 
                 if (clickedObject.name == "VanGogh (1)")
                 {
-                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
-                    SocketManager.Instance.SendSocket("vanGoghClick");
+                    // Votre code ï¿½ exï¿½cuter lorsque l'objet est cliquï¿½ ou touchï¿½
+                    //SocketManager.Instance.SendSocket("vanGoghClick");
                 }
 
                 if (clickedObject.name == "Tableau")
                 {
-                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
+                    // Votre code ï¿½ exï¿½cuter lorsque l'objet est cliquï¿½ ou touchï¿½
                     SocketManager.Instance.SendSocket("tableauChambreClick");
                 }
             }

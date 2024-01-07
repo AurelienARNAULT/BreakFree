@@ -20,7 +20,7 @@ transition_speed = 0.5  # Vitesse de la transition
 attempt = 0
 while not sio.connected and attempt < reconnection_attempts:
     try:
-        sio.connect('http://172.20.10.2:3000')
+        sio.connect('http://localhost:3000')
         print("Connecté au serveur WebSocket.")
     except socketio.exceptions.ConnectionError as e:
         print(f"Tentative {attempt + 1}/{reconnection_attempts} échouée: {e}")
@@ -36,9 +36,18 @@ else:
 def onVanGoghClick(data):
     global active
     global transitioning
-    transitioning = True
-    active = True
-    print('onVanGoghClick', data)
+    if not active:
+        transitioning = True
+        active = True
+        print('onVanGoghClick', data)
+    
+@sio.on('onLeaveSalon') # Décorateur pour gérer l'événement 'onLeaveOffice'
+def onLeaveSalon(data):
+    global active
+    global transitioning
+    transitioning = False
+    active = False
+    print('onLeaveSalon', data)
 
 def ajuster_luminosite(image, facteur):
     # Convertir l'image en un tableau numpy
@@ -89,7 +98,7 @@ fond = fond_original.copy()
 facteur_luminosite = 0.10
 
 # Création de la fenêtre plein écran
-screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((width, height))#, pygame.FULLSCREEN)
 pygame.display.set_caption("Détection de Dessin de Soleil")
 
 # Initialisation des variables

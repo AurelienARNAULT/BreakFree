@@ -55,6 +55,15 @@ export class MyGateway implements OnModuleInit {
     });
   }
 
+  @SubscribeMessage('leaveSalon')
+  async onLeaveSalon(@MessageBody() body: any) {
+    console.log(body);
+    this.server.emit('onLeaveSalon', {
+      msg: 'The user left the salon',
+      content: body,
+    });
+  }
+
   @SubscribeMessage('objectSentToPocket')
   onObjectSentToPocket(@MessageBody() body: any) {
     console.log(body);

@@ -26,7 +26,7 @@ public class RetourMapScene : MonoBehaviour
 
     void Update()
     {
-        // Vérifier si l'utilisateur a appuyé sur la souris ou a touché l'écran
+        // Vï¿½rifier si l'utilisateur a appuyï¿½ sur la souris ou a touchï¿½ l'ï¿½cran
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             // Obtenir la position du clic ou du toucher
@@ -45,10 +45,10 @@ public class RetourMapScene : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(clickPosition);
             RaycastHit hit;
 
-            // Vérifier si le rayon intersecte un objet dans la scène
+            // Vï¿½rifier si le rayon intersecte un objet dans la scï¿½ne
             if (Physics.Raycast(ray, out hit))
             {
-                // Objet cliqué ou touché
+                // Objet cliquï¿½ ou touchï¿½
                 GameObject clickedObject = hit.collider.gameObject;
 
                 if (clickedObject.name == "RetourMapScene")
@@ -73,7 +73,11 @@ public class RetourMapScene : MonoBehaviour
 
                     PlayerPrefs.Save();
 
-                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
+                    // Votre code ï¿½ exï¿½cuter lorsque l'objet est cliquï¿½ ou touchï¿½
+                    if (SceneManager.GetActiveScene().name == "SalonScene")
+                    {
+                        SocketManager.Instance.SendSocket("leaveSalon", "{\"msg\":\"leaving the salon\"}");
+                    }
                     SceneManager.LoadScene(1);
                 }
                 if (clickedObject.name == "RetourSalonSceneFromBillard")
@@ -82,7 +86,7 @@ public class RetourMapScene : MonoBehaviour
                     if (ObjectDice)  PlayerPrefs.SetInt("DicePresent", ObjectDice.activeInHierarchy ? 2 : 1);
 
                     PlayerPrefs.Save();
-                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
+                    // Votre code ï¿½ exï¿½cuter lorsque l'objet est cliquï¿½ ou touchï¿½
                     SceneManager.LoadScene(2);
                 }
                 if (clickedObject.name == "RetourSalonSceneFromBureau")
@@ -90,7 +94,7 @@ public class RetourMapScene : MonoBehaviour
                     if (ObjectKey) PlayerPrefs.SetInt("KeyPresent", ObjectKey.activeInHierarchy ? 2 : 1);
 
                     PlayerPrefs.Save();
-                    // Votre code à exécuter lorsque l'objet est cliqué ou touché
+                    // Votre code ï¿½ exï¿½cuter lorsque l'objet est cliquï¿½ ou touchï¿½
                     SceneManager.LoadScene(2);
                 }
             }
