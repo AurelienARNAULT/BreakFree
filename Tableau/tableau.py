@@ -79,9 +79,11 @@ def onLeaveRoom(data):
     global active
     global transitioning
     global bedRoom
+    global dessin_surface
     transitioning = False
     active = False
     bedRoom = False
+    dessin_surface = pygame.Surface((width, height), pygame.SRCALPHA)
     print('onLeaveRoom', data)
 
 def ajuster_luminosite(image, facteur):
