@@ -21,7 +21,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
     <View style={styles.container}>
       <RNCamera
         style={styles.preview}
-        type={RNCamera.Constants.Type.front}
+        type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.on}
         androidCameraPermissionOptions={{
           title: 'Permission d’utiliser la caméra',
