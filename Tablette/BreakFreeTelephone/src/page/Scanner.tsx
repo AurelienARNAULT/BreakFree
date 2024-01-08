@@ -13,7 +13,7 @@ const Scanner = () => {
     <View style={styles.container}>
       <RNCamera
         style={styles.preview}
-        type={RNCamera.Constants.Type.front} // Modifiez cette ligne
+        type={RNCamera.Constants.Type.back} // Modifiez cette ligne
         flashMode={RNCamera.Constants.FlashMode.on}
         androidCameraPermissionOptions={{
           title: 'Permission d’utiliser la caméra',
