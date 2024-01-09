@@ -50,36 +50,36 @@ const Objects: React.FC<ObjectsProps> = ({id, objectName, containerPosition, isS
     let newImageHeight = circleRadius * 2;
     let newImageWidth = circleRadius * 2;
 
-    let imagePath = require('../ressources/poche/piece.png');
+    let imagePath = require('../ressources/image/poche/piece.png');
     switch (objectName) {
         case "piece":
-            imagePath = require('../ressources/poche/piece.png');
+            imagePath = require('../ressources/image/poche/piece.png');
             break;
         case "piece1":
-            imagePath = require('../ressources/poche/piece1.png');
+            imagePath = require('../ressources/image/poche/piece1.png');
             break;
         case "key":
-            imagePath = require('../ressources/poche/key.png');
+            imagePath = require('../ressources/image/poche/key.png');
             newImageHeight = circleRadius * 2;
             newImageWidth = circleRadius * 4.6;
             break;
         case "dice":
-            imagePath = require('../ressources/poche/dice.png');
+            imagePath = require('../ressources/image/poche/dice.png');
             newImageHeight = circleRadius * 2;
             newImageWidth = circleRadius * 2;
             break;
         case "ticket":
-            imagePath = require('../ressources/poche/ticket.png');
+            imagePath = require('../ressources/image/poche/ticket.png');
             newImageHeight = circleRadius * 7.6;
             newImageWidth = circleRadius * 3.4;
             break;
         case "wallet":
-            imagePath = require('../ressources/poche/wallet.png');
+            imagePath = require('../ressources/image/poche/wallet.png');
             newImageHeight = circleRadius * 4.7;
             newImageWidth = circleRadius * 3;
             break;
         case "paint":
-            imagePath = require('../ressources/poche/paint.png');
+            imagePath = require('../ressources/image/poche/paint.png');
             newImageHeight = circleRadius * 7;
             newImageWidth = circleRadius * 4.4;
             break;
@@ -287,7 +287,7 @@ const Objects: React.FC<ObjectsProps> = ({id, objectName, containerPosition, isS
                                                         {
                                                             height: newImageHeight,
                                                             width: newImageWidth,
-                                                            backgroundColor:isSelected ? 'blue' : 'transparent',
+                                                            backgroundColor:isSelected ? 'rgba(251, 255, 0, 0.4)' : 'transparent',
                                                             borderRadius: 20,
                                                         },{
                                                             transform: [
