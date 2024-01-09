@@ -1,15 +1,5 @@
 {
   "dependencies": {
-    "com.google.xr.cardboard": {
-      "version": "https://github.com/googlevr/cardboard-xr-plugin.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.xr.management": "3.2.9",
-        "com.unity.xr.legacyinputhelpers": "2.1.4"
-      },
-      "hash": "17e19f289a527844abc08404d0ef6e961927b2d6"
-    },
     "com.itisnajim.socketiounity": {
       "version": "https://github.com/itisnajim/SocketIOUnity.git",
       "depth": 0,

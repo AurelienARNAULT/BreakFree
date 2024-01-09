@@ -24,7 +24,7 @@ current_image_path = 'assets/sprits/tableau.jpg'
 attempt = 0
 while not sio.connected and attempt < reconnection_attempts:
     try:
-        sio.connect('http://localhost:3000')
+        sio.connect('http://172.20.10.11:3000')
         print("Connecté au serveur WebSocket.")
     except socketio.exceptions.ConnectionError as e:
         print(f"Tentative {attempt + 1}/{reconnection_attempts} échouée: {e}")

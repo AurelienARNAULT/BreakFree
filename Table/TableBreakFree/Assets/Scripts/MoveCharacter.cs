@@ -9,7 +9,6 @@ public class MoveCharacter : MonoBehaviour
     private bool inSalon = false;
     private bool inChambre = false;
 
-
     GameObject ChambreCollider;
     GameObject Door;
     GameObject CrimeDoNotCross;
@@ -19,7 +18,6 @@ public class MoveCharacter : MonoBehaviour
     {
         positionOrigine = transform.position;
 
-
         ChambreCollider = GameObject.Find("ChambreCollider");
         Door = GameObject.Find("Door");
         CrimeDoNotCross = GameObject.Find("CrimeChambre");
@@ -27,11 +25,12 @@ public class MoveCharacter : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // V�rifiez s'il y a une collision avec la zone interdite
+        Debug.Log(other.tag + "Enter");
+
         if (other.CompareTag("PieceInterdite"))
         {
-            // Marquez que le personnage est actuellement dans une zone interdite
             inForbiddenZone = true;
+            Debug.Log(inForbiddenZone);
         }
         else if (other.CompareTag("SalonCollider"))
         {
@@ -45,7 +44,8 @@ public class MoveCharacter : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        // R�initialisez le bool�en lorsque le personnage quitte la zone interdite
+        Debug.Log(other.tag + "Exit");
+
         if (other.CompareTag("PieceInterdite"))
         {
             inForbiddenZone = false;
@@ -64,14 +64,12 @@ public class MoveCharacter : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("inForbiddenZone " + inForbiddenZone + " x " + LeanTouch.Fingers.Count);
-
-        // V?rifiez si le personnage est actuellement dans une zone interdite et s'il n'y a pas de mouvement
         if (LeanTouch.Fingers.Count <= 1)
         {
+            Debug.Log("dans If du Update");
             if (inForbiddenZone)
             {
-                // Repositionnez le personnage ? sa position d'origine
+                Debug.Log("inForbiddenZone");
                 ReplacerAPositionOrigine();
             }
 
@@ -102,6 +100,8 @@ public class MoveCharacter : MonoBehaviour
 
             else if (inChambre)
             {
+                Debug.Log("inChambre");
+
                 if (ChambreCollider) PlayerPrefs.SetInt("ChambreOpen", ChambreCollider.tag == "ChambreCollider" ? 2 : 1);
                 if (CrimeDoNotCross) PlayerPrefs.SetInt("CrimePresent", CrimeDoNotCross.activeInHierarchy ? 2 : 1);
                 if (Door)
@@ -129,7 +129,7 @@ public class MoveCharacter : MonoBehaviour
 
     void ReplacerAPositionOrigine()
     {
-        // Utilisez la position d'origine pour repositionner le personnage
+        Debug.Log("ReplacerAPositionOrigine");
         transform.position = positionOrigine;
     }
 }
