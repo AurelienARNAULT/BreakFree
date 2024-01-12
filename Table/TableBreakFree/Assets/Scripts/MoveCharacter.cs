@@ -30,7 +30,6 @@ public class MoveCharacter : MonoBehaviour
         if (other.CompareTag("PieceInterdite"))
         {
             inForbiddenZone = true;
-            Debug.Log(inForbiddenZone);
         }
         else if (other.CompareTag("SalonCollider"))
         {
@@ -40,11 +39,15 @@ public class MoveCharacter : MonoBehaviour
         {
             inChambre = true;
         }
+        else if (other.CompareTag("Map"))
+        {
+            inForbiddenZone = false; inSalon = false; inChambre = false;
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.tag + "Exit");
+        //Debug.Log(other.tag + "Exit");
 
         if (other.CompareTag("PieceInterdite"))
         {
@@ -64,12 +67,12 @@ public class MoveCharacter : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("inForbiddenZone " + inForbiddenZone);
+
         if (LeanTouch.Fingers.Count <= 1)
         {
-            Debug.Log("dans If du Update");
             if (inForbiddenZone)
             {
-                Debug.Log("inForbiddenZone");
                 ReplacerAPositionOrigine();
             }
 

@@ -8,6 +8,8 @@ TagManager:
   - SalonCollider
   - ChambreCollider
   - PocheIcon
+  - Door
+  - Map
   layers:
   - Default
   - TransparentFX
