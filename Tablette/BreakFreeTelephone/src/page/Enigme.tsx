@@ -47,8 +47,8 @@ const Enigme = () => {
     const numberOfItems = 13; // Le nombre d'éléments que vous voulez créer
 
     const imgs = [
-        require('../ressources/loupe.png'),
-        require('../ressources/nuit.jpg')
+        require('../ressources/image/loupe.png'),
+        require('../ressources/image/nuit.jpg')
     ];
 
     for (let i = 1; i <= numberOfItems; i++) {
@@ -75,7 +75,7 @@ const Enigme = () => {
 
     return (
         <ImageBackground
-            source={require('../ressources/1599665227fond_parchemin.jpg')}
+            source={require('../ressources/image/1599665227fond_parchemin.jpg')}
             style={styles.backgroundImage}
             resizeMode="cover">
             <View style={styles.overlay}/>

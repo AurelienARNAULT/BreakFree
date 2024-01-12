@@ -47,26 +47,26 @@ const App = ({navigation}: { navigation: Main2NavigationProp }) => {
 
     const buttons = [
         {
-            source: require('../ressources/acceuil/Poche.png'),
+            source: require('../ressources/image/acceuil/Poche.png'),
             onPress: () => navigation.navigate('Poche'),
         },
         {
-            source: require('../ressources/acceuil/Enigme.png'),
+            source: require('../ressources/image/acceuil/Enigme.png'),
             onPress: () => navigation.navigate('Enigme'),
         },
         {
-            source: require('../ressources/acceuil/histoire_bouton.png'),
+            source: require('../ressources/image/acceuil/histoire_bouton.png'),
             onPress: () => navigation.navigate('Histoire'),
         },
         {
-            source: require('../ressources/acceuil/Scanner.png'),
+            source: require('../ressources/image/acceuil/Scanner.png'),
             onPress: () => navigation.navigate('Scanner'),
         },
     ];
 
     return (
         <ImageBackground
-            source={require('../ressources/1599665227fond_parchemin.jpg')}
+            source={require('../ressources/image/1599665227fond_parchemin.jpg')}
             style={styles.backgroundImage}
             resizeMode="cover">
             <View
