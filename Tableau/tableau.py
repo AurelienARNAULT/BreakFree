@@ -58,6 +58,7 @@ def onVanGoghClick(data):
         fond_original = pygame.transform.scale(fond_original, (width, height))  # Redimensionner l'image
         facteur_luminosite = 0.10
         print('onVanGoghClick', data)
+        awake_sound.play()
 
 @sio.on('onEnterBedroom') # Décorateur pour gérer l'événement 'onBedRoomClick'
 def onEnterBedroom(data):
@@ -84,6 +85,7 @@ def onEnterBedroom(data):
         fond_original = pygame.image.load(current_image_path)  # Charger la nouvelle image
         fond_original = pygame.transform.scale(fond_original, (width, height))  # Redimensionner l'image
         facteur_luminosite = 1.0  # Réinitialiser le facteur de luminosité
+        awake_sound.play()
 
 @sio.on('onScanned') # Gestionnaire d'événement pour 'onScanned'
 def onScanned(data):
@@ -136,6 +138,13 @@ def verifier_rayons(surface, zone_rayon, zone_soleil, couleur, seuil):
 
 # Initialiser Pygame
 pygame.init()
+pygame.mixer.init()
+
+# Sons
+steps = 0
+awake_sound = pygame.mixer.Sound('assets/sounds/PaintingAwake.mp3')
+step_sound = pygame.mixer.Sound('assets/sounds/riddleStep.mp3')
+finished_sound = pygame.mixer.Sound('assets/sounds/riddleFinished.mp3')
 
 # Récupération des dimensions de l'écran
 infoObject = pygame.display.Info()
@@ -286,17 +295,30 @@ while running:
         # Détection
         if not not_in_zone:
             if not soleil and verifier_soleil(dessin_surface, zone_soleil, YELLOW, seuil=2500 * max(facteur_echelle_largeur,facteur_echelle_hauteur)):
+                steps += 1
+                if steps <= 3 and steps > 0:
+                    step_sound.play()
                 soleil = True
                 facteur_luminosite = facteur_luminosite + 0.30
             if not rayons_haut and verifier_rayons(dessin_surface, zone_rayons, zone_soleil,  YELLOW, seuil=200 * max(facteur_echelle_largeur,facteur_echelle_hauteur)):
+                steps += 1
+                if steps <= 3 and steps > 0:
+                    step_sound.play()
                 rayons_haut = True
                 facteur_luminosite = facteur_luminosite + 0.20
             if not rayons_centre and verifier_rayons(dessin_surface, zone_rayons, zone_soleil,  YELLOW, seuil=500 * max(facteur_echelle_largeur,facteur_echelle_hauteur)):
+                steps += 1
+                if steps <= 3 and steps > 0:
+                    step_sound.play()
                 rayons_centre = True
                 facteur_luminosite = facteur_luminosite + 0.20
             if not rayons_droite and verifier_rayons(dessin_surface, zone_rayons, zone_soleil,  YELLOW, seuil=800 * max(facteur_echelle_largeur,facteur_echelle_hauteur)):
+                steps += 1
+                if steps <= 3 and steps > 0:
+                    step_sound.play()
                 rayons_droite = True
                 facteur_luminosite = facteur_luminosite + 0.20
+            
 
         # Affichage de l'image de fond
         fond = ajuster_luminosite(fond_original, facteur_luminosite)
@@ -304,6 +326,7 @@ while running:
         screen.blit(dessin_surface, (0, 0))
 
         if soleil and rayons_haut and rayons_centre and rayons_droite and not sent:
+            finished_sound.play()
             afficher_sprites = True
             sio.emit('newMessage', {'message': 'Le soleil a été entièrement dessiné'})
             sent = True
