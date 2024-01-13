@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CadenasClick : MonoBehaviour
 {
@@ -34,8 +35,6 @@ public class CadenasClick : MonoBehaviour
             {
                 GameObject clickedObject = hit.collider.gameObject;
 
-                Debug.Log(clickedObject.name);
-
                 // Ajouter l'objet cliqué à la liste des clics du joueur
                 clicsJoueur.Add(clickedObject.name);
 
@@ -46,6 +45,8 @@ public class CadenasClick : MonoBehaviour
                 {
                     // Si l'ordre des clics est correct, faire quelque chose (à remplacer par votre logique)
                     Debug.Log("Bonne séquence !");
+                    PlayerPrefs.SetInt("PadlockOpen", 2);
+                    SceneManager.LoadScene(1);
                 }
 
                 // Vider la liste des clics du joueur si elle a plus de 4 valeurs

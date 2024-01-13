@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ChambreScene.unity
     guid: 94eccc9c1357ed44693e7e3d7b9d5fb2
+  - enabled: 1
+    path: Assets/Scenes/PadloackScene.unity
+    guid: c3924e0ad08b6884ea408b23b44b3873
   m_configObjects: {}
