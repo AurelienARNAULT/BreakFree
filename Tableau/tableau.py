@@ -17,14 +17,17 @@ transition_progress = 0
 transition_speed = 1  # Vitesse de la transition
 bedRoom = False
 scanned = False
+mouse_is_pressed = False
 
 current_image_path = 'assets/sprits/tableau.jpg'
+background_image_path = 'assets/sprits/QRImage.jpg'
+background_image = None
 
 # Tenter de se connecter au serveur
 attempt = 0
 while not sio.connected and attempt < reconnection_attempts:
     try:
-        sio.connect('http://172.20.10.11:3000')
+        sio.connect('http://localhost:3000')
         print("Connecté au serveur WebSocket.")
     except socketio.exceptions.ConnectionError as e:
         print(f"Tentative {attempt + 1}/{reconnection_attempts} échouée: {e}")
@@ -55,6 +58,7 @@ def onVanGoghClick(data):
         fond_original = pygame.transform.scale(fond_original, (width, height))  # Redimensionner l'image
         facteur_luminosite = 0.10
         print('onVanGoghClick', data)
+        awake_sound.play()
 
 @sio.on('onEnterBedroom') # Décorateur pour gérer l'événement 'onBedRoomClick'
 def onEnterBedroom(data):
@@ -65,15 +69,23 @@ def onEnterBedroom(data):
     global fond_original  # Ajoutez cette ligne si vous souhaitez mettre à jour fond_original directement ici
     global facteur_luminosite
     global transition_progress
+    global background_image
     if not active:
         transition_progress = 0
         transitioning = True
         active = True
         bedRoom = True
         current_image_path = 'assets/sprits/tableauChambre.jpg'
+        try:
+            background_image = pygame.image.load(background_image_path).convert_alpha()  # Assurez-vous que le chemin est correct
+            background_image = pygame.transform.scale(background_image, (width, height))
+        except Exception as e:
+            print(f"Erreur lors du chargement de l'image de fond : {e}")
+            background_image = None  # Cela garantit que si le chargement échoue, background_image est défini sur None
         fond_original = pygame.image.load(current_image_path)  # Charger la nouvelle image
         fond_original = pygame.transform.scale(fond_original, (width, height))  # Redimensionner l'image
         facteur_luminosite = 1.0  # Réinitialiser le facteur de luminosité
+        awake_sound.play()
 
 @sio.on('onScanned') # Gestionnaire d'événement pour 'onScanned'
 def onScanned(data):
@@ -126,10 +138,19 @@ def verifier_rayons(surface, zone_rayon, zone_soleil, couleur, seuil):
 
 # Initialiser Pygame
 pygame.init()
+pygame.mixer.init()
+
+# Sons
+steps = 0
+awake_sound = pygame.mixer.Sound('assets/sounds/PaintingAwake.mp3')
+step_sound = pygame.mixer.Sound('assets/sounds/riddleStep.mp3')
+finished_sound = pygame.mixer.Sound('assets/sounds/riddleFinished.mp3')
 
 # Récupération des dimensions de l'écran
 infoObject = pygame.display.Info()
-width, height = infoObject.current_w, infoObject.current_h
+#width, height = infoObject.current_w, infoObject.current_h
+#TODO: Remove this line
+width, height = 1024, 768
 
 # Paramètres de l'image et de la fenêtre
 chemin_image = current_image_path
@@ -142,6 +163,7 @@ fond = fond_original.copy()
 facteur_luminosite = 0.10
 
 # Création de la fenêtre plein écran
+#TODO: Remove the comment
 screen = pygame.display.set_mode((width, height))#, pygame.FULLSCREEN)
 pygame.display.set_caption("Détection de Dessin de Soleil")
 
@@ -206,13 +228,29 @@ while running:
         
         screen.fill(color)
         pygame.display.flip()
-    elif bedRoom:
+    elif bedRoom :
+        if background_image is None:
+            print("L'image de fond n'a pas été chargée.")
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_ESCAPE:
                     running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Bouton gauche de la souris
+                mouse_is_pressed = True
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # Bouton gauche de la souris
+                mouse_is_pressed = False
+            elif event.type == pygame.MOUSEMOTION and mouse_is_pressed:
+                # Obtenir la position de la souris
+                mouse_pos = event.pos
+                # Définir la taille de la brosse
+                brush_size = 20
+                # Calculer la zone à effacer
+                clear_rect = pygame.Rect(mouse_pos[0] - brush_size // 2, mouse_pos[1] - brush_size // 2, brush_size, brush_size)
+                # Effacer cette zone sur l'image de premier plan
+                if background_image:
+                    fond_original.blit(background_image, clear_rect.topleft, clear_rect)
         screen.blit(fond_original, (0, 0))
 
         if scanned:
@@ -257,17 +295,30 @@ while running:
         # Détection
         if not not_in_zone:
             if not soleil and verifier_soleil(dessin_surface, zone_soleil, YELLOW, seuil=2500 * max(facteur_echelle_largeur,facteur_echelle_hauteur)):
+                steps += 1
+                if steps <= 3 and steps > 0:
+                    step_sound.play()
                 soleil = True
                 facteur_luminosite = facteur_luminosite + 0.30
             if not rayons_haut and verifier_rayons(dessin_surface, zone_rayons, zone_soleil,  YELLOW, seuil=200 * max(facteur_echelle_largeur,facteur_echelle_hauteur)):
+                steps += 1
+                if steps <= 3 and steps > 0:
+                    step_sound.play()
                 rayons_haut = True
                 facteur_luminosite = facteur_luminosite + 0.20
             if not rayons_centre and verifier_rayons(dessin_surface, zone_rayons, zone_soleil,  YELLOW, seuil=500 * max(facteur_echelle_largeur,facteur_echelle_hauteur)):
+                steps += 1
+                if steps <= 3 and steps > 0:
+                    step_sound.play()
                 rayons_centre = True
                 facteur_luminosite = facteur_luminosite + 0.20
             if not rayons_droite and verifier_rayons(dessin_surface, zone_rayons, zone_soleil,  YELLOW, seuil=800 * max(facteur_echelle_largeur,facteur_echelle_hauteur)):
+                steps += 1
+                if steps <= 3 and steps > 0:
+                    step_sound.play()
                 rayons_droite = True
                 facteur_luminosite = facteur_luminosite + 0.20
+            
 
         # Affichage de l'image de fond
         fond = ajuster_luminosite(fond_original, facteur_luminosite)
@@ -275,6 +326,7 @@ while running:
         screen.blit(dessin_surface, (0, 0))
 
         if soleil and rayons_haut and rayons_centre and rayons_droite and not sent:
+            finished_sound.play()
             afficher_sprites = True
             sio.emit('newMessage', {'message': 'Le soleil a été entièrement dessiné'})
             sent = True
