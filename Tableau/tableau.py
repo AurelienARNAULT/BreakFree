@@ -3,6 +3,7 @@ import pygame
 import sys
 import numpy as np
 import socketio
+import json
 
 # Variables de gestion de connexion
 reconnection_attempts = 5
@@ -18,6 +19,9 @@ transition_speed = 1  # Vitesse de la transition
 bedRoom = False
 scanned = False
 mouse_is_pressed = False
+razor_received = False
+razor_used = False
+wrong_object = False
 
 current_image_path = 'assets/sprits/tableau.jpg'
 background_image_path = 'assets/sprits/QRImage.jpg'
@@ -105,6 +109,23 @@ def onLeaveRoom(data):
     dessin_surface = pygame.Surface((width, height), pygame.SRCALPHA)
     print('onLeaveRoom', data)
 
+@sio.on('onObjectUsed') # Décorateur pour gérer l'événement 'onReceivedObject'
+def onObjectUsed(data):
+    global scanned
+    global sent
+    global razor_received
+    global wrong_object
+    print('onObjectUsed', data)
+    # Extraire et analyser le contenu JSON de 'data'
+    content = json.loads(data['content'])
+    print(content)
+
+    # Vérifier si le "name" est "razor"
+    if content.get("name") == "razor" and razor_received == False:
+        razor_received = True
+    else:
+        wrong_object = True
+
 def ajuster_luminosite(image, facteur):
     # Convertir l'image en un tableau numpy
     array = pygame.surfarray.pixels3d(image)
@@ -145,6 +166,7 @@ steps = 0
 awake_sound = pygame.mixer.Sound('assets/sounds/PaintingAwake.mp3')
 step_sound = pygame.mixer.Sound('assets/sounds/riddleStep.mp3')
 finished_sound = pygame.mixer.Sound('assets/sounds/riddleFinished.mp3')
+wrong_sound = pygame.mixer.Sound('assets/sounds/wrongObject.mp3')
 
 # Récupération des dimensions de l'écran
 infoObject = pygame.display.Info()
@@ -238,7 +260,14 @@ while running:
                 if event.key == pygame.K_ESCAPE:
                     running = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Bouton gauche de la souris
-                mouse_is_pressed = True
+                if razor_received:
+                    if not razor_used:
+                        step_sound.play()
+                        razor_used = True
+                    mouse_is_pressed = True
+                elif wrong_object:
+                    wrong_sound.play()
+                    wrong_object = False
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:  # Bouton gauche de la souris
                 mouse_is_pressed = False
             elif event.type == pygame.MOUSEMOTION and mouse_is_pressed:
