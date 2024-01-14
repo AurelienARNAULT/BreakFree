@@ -58,8 +58,8 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="BienJoue" component={BienJoueScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="BienJoue" component={BienJoueScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </View>
   );

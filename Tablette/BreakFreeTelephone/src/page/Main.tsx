@@ -50,6 +50,7 @@ const App = ({navigation}: { navigation: Main2NavigationProp }) => {
             source: require('../ressources/image/acceuil/Poche.png'),
             onPress: () => navigation.navigate('Poche'),
         },
+        /*
         {
             source: require('../ressources/image/acceuil/Enigme.png'),
             onPress: () => navigation.navigate('Enigme'),
@@ -58,6 +59,7 @@ const App = ({navigation}: { navigation: Main2NavigationProp }) => {
             source: require('../ressources/image/acceuil/histoire_bouton.png'),
             onPress: () => navigation.navigate('Histoire'),
         },
+        */
         {
             source: require('../ressources/image/acceuil/Scanner.png'),
             onPress: () => navigation.navigate('Scanner'),

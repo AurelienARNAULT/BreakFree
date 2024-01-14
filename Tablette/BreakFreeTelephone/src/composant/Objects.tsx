@@ -100,8 +100,6 @@ const Objects: React.FC<ObjectsProps> = ({id, objectName, containerPosition, isS
     React.useEffect(() => {
 
         globalRef.current?.measure((fx, fy, width, height, px, py) => {
-            console.log(containerPosition)
-            console.log(objectName);
             _lastOffset.current.x = 0;
             _lastOffset.current.y = 100000;
             firstTouch = true;
@@ -133,9 +131,6 @@ const Objects: React.FC<ObjectsProps> = ({id, objectName, containerPosition, isS
             }
             _touchX.setValue(_lastOffset.current.x);
             _touchY.setValue(_lastOffset.current.y)
-            console.log("trueright " + trueRight.current);
-            console.log("x " + _lastOffset.current.x);
-            console.log("y " + _lastOffset.current.y);
 
         });
     }, [containerPosition]);
