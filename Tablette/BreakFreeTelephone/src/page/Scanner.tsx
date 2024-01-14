@@ -1,20 +1,26 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet, Text} from 'react-native'; // Ajoutez l'importation de Text
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet, Text} from 'react-native';
 import {RNCamera, BarCodeReadEvent} from 'react-native-camera';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
 import socket from '../socket/socket';
 
 const Stack = createStackNavigator();
+
+const QR_CODE_EXPECTED = 'https://www.exemple.com'; // Le contenu attendu du QR code
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   useEffect(() => {
     socket.emit('scanned');
   }, []);
 
+  const [error, setError] = useState(''); // État pour stocker le message d'erreur
+
   const handleBarCodeRead = ({data}: BarCodeReadEvent) => {
-    // Naviguer vers une autre page avec les données du code-barres
-    navigation.navigate('BienJoue', {barcodeData: data});
+    if (data === QR_CODE_EXPECTED) {
+      navigation.navigate('BienJoue', {barcodeData: data});
+    } else {
+      setError('QR code incorrect. Veuillez réessayer.');
+    }
   };
 
   return (
@@ -32,6 +38,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
         }}
         onBarCodeRead={handleBarCodeRead}
       />
+      {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );
 };
@@ -49,12 +56,12 @@ const BienJoueScreen = ({route}: {route: any}) => {
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <View style={styles.container}>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="BienJoue" component={BienJoueScreen} />
       </Stack.Navigator>
-    </NavigationContainer>
+    </View>
   );
 };
 
@@ -68,6 +75,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+  },
+  error: {
+    color: 'red',
+    fontSize: 16,
+    padding: 20,
+    textAlign: 'center',
   },
 });
 
