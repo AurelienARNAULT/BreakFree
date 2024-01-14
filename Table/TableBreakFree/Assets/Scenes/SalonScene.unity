@@ -353,7 +353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 488169597}
   - component: {fileID: 488169596}
-  - component: {fileID: 488169595}
+  - component: {fileID: 488169598}
   m_Layer: 0
   m_Name: SalonCamera
   m_TagString: MainCamera
@@ -361,14 +361,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &488169595
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488169594}
-  m_Enabled: 1
 --- !u!20 &488169596
 Camera:
   m_ObjectHideFlags: 0
@@ -427,6 +419,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
+--- !u!81 &488169598
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488169594}
+  m_Enabled: 1
 --- !u!1 &513713344
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,6 +521,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &593760346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 593760348}
+  - component: {fileID: 593760347}
+  m_Layer: 0
+  m_Name: ObjectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &593760347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593760346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da4254de9b074bacb6665197f8648ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &593760348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593760346}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &727104249
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,7 +1041,6 @@ GameObject:
   - component: {fileID: 1540014454}
   - component: {fileID: 1540014453}
   - component: {fileID: 1540014452}
-  - component: {fileID: 1540014457}
   m_Layer: 0
   m_Name: Map (1)
   m_TagString: Untagged
@@ -1096,17 +1139,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1540014457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540014451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9da4254de9b074bacb6665197f8648ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomCollider: {fileID: 0}
-  roomCrimeTapes: {fileID: 0}

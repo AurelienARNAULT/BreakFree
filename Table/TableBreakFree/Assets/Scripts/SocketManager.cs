@@ -11,6 +11,7 @@ public class SocketManager : MonoBehaviour
 
     private string currentObject = null;
 
+    private bool isObjectUsed = false;
     // Singleton pattern
     private static SocketManager instance;
     public static SocketManager Instance { get { return instance; } }
@@ -76,6 +77,7 @@ public class SocketManager : MonoBehaviour
                 Debug.Log("name : " + name);
                 this.currentObject = name;
                 Debug.Log("message : " + message);
+                isObjectUsed = true;
             }
             catch (Exception ex)
             {
@@ -87,6 +89,13 @@ public class SocketManager : MonoBehaviour
         socket.Connect();
     }
 
+    void Update()
+    {
+        if (isObjectUsed){
+            isObjectUsed = false;
+            SoundManager.Instance.PlayObjectRetrieved();
+        }
+    }
     public void SendSocket(params string[] messages)
     {
         foreach (string message in messages)

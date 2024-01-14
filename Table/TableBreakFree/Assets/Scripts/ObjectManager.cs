@@ -10,9 +10,18 @@ public class ObjectManager : MonoBehaviour
 
     void Start()
     {
-        roomCrimeTapes = GameObject.Find("CrimeChambre");
-        roomCollider = GameObject.Find("ChambreCollider").GetComponent<Collider>();
+        Debug.Log("ObjectManager Start");
+        try 
+        {
+            roomCollider = GameObject.Find("ChambreCollider").GetComponent<Collider>();
+            roomCrimeTapes = GameObject.Find("CrimeChambre");
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("ObjectManager - Not in the map scene or objects not found");
+        }
     }
+        
 
     void Update()
     {
@@ -47,6 +56,7 @@ public class ObjectManager : MonoBehaviour
                 }else
                 {
                     Debug.Log("Wrong object");
+                    SoundManager.Instance.PlayWrongObject();
                     SocketManager.Instance.SendSocket("wrongObject", "{\"name\":\"" + SocketManager.Instance.GetCurrentObject() + "\"}");
                 }
                 SocketManager.Instance.SetCurrentObject(null);

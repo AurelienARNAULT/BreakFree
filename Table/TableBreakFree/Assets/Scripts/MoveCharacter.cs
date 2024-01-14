@@ -67,8 +67,6 @@ public class MoveCharacter : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("inForbiddenZone " + inForbiddenZone);
-
         if (LeanTouch.Fingers.Count <= 1)
         {
             if (inForbiddenZone)

@@ -53,6 +53,9 @@ public class IconClickHandler : MonoBehaviour
                     Debug.Log("PocheIcon clicked");
                     // Votre code à exécuter lorsque l'objet est cliqué ou touché
                     SocketManager.Instance.SendSocket(eventName, jsonMessage.ToString());
+                    if (gobject.name == "Key" || gobject.name == "Dice"){
+                        SoundManager.Instance.PlayRiddleStep();
+                    }
 					gobject.SetActive(false);
                 }
             }
