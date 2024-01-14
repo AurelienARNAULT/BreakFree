@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 154899517}
   - component: {fileID: 154899516}
   - component: {fileID: 154899515}
-  - component: {fileID: 154899519}
   m_Layer: 0
   m_Name: Piece
   m_TagString: Untagged
@@ -222,18 +221,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &154899519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154899514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 599643f9066292949ba9db7d899480e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &339910958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,18 +1568,6 @@ MonoBehaviour:
   axis: {x: 0, y: -1, z: 0}
   space: 1
   sensitivity: 1
---- !u!114 &1878186209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1878186202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7f02799bb63bd64fb80b9449aa04418, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1945979226
 PrefabInstance:
   m_ObjectHideFlags: 0
