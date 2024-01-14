@@ -7,6 +7,7 @@ public class ObjectManager : MonoBehaviour
     Collider roomCollider;
     GameObject roomCrimeTapes;
 
+
     void Start()
     {
         roomCrimeTapes = GameObject.Find("CrimeChambre");
@@ -38,6 +39,7 @@ public class ObjectManager : MonoBehaviour
                 Debug.Log(clickedObject.tag);
                 if (clickedObject.tag.ToLower() == "door" && SocketManager.Instance.GetCurrentObject().ToLower() == "key")
                 {
+                    SoundManager.Instance.PlayRiddleFinished();
                     clickedObject.GetComponent<DoorManager>().OpenDoor();
                     roomCollider.tag = "ChambreCollider";
                     roomCrimeTapes.SetActive(false);
