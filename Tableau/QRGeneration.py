@@ -1,7 +1,13 @@
 import qrcode
 
-# Données à encoder dans le QR Code
-data = "https://www.python.org"
+# Couleurs à encoder
+couleurs = ["bleu", "blanc", "rouge", "vert"]
+
+# URL à encoder
+url = "http://breakFree/scan"
+
+# Concaténation des couleurs et de l'URL en une chaîne de caractères
+data = f"{url}?colors={','.join(couleurs)}"
 
 # Générer le QR Code
 qr = qrcode.QRCode(

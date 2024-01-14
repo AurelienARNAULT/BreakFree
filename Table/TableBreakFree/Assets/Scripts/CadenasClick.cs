@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CadenasClick : MonoBehaviour
 {
-    private List<string> bonOrdre = new List<string> { "Heart", "Star", "Dice", "Piece" }; // Le bon ordre à faire
+    private List<string> bonOrdre = new List<string> { "Dice", "Heart", "Star", "Piece" }; // Le bon ordre à faire
     private List<string> clicsJoueur = new List<string>(); // La liste des strings du joueur
 
     void Start()
