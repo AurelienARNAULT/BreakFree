@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // N'oubliez pas d'ajouter cette ligne pour accéder aux fonctionnalités UI
+using TMPro;
 
 public class SocketChecking : MonoBehaviour
 {
@@ -9,12 +11,25 @@ public class SocketChecking : MonoBehaviour
     private List<string> cubesInOrder = new List<string> { "Cube1", "Cube2", "Cube3", "Cube4" };
 
     private AudioSource audioSource;
-    private bool soundPlayed = false; // Variable pour suivre si le son a déjà été joué
+    private bool soundPlayed = false;
+
+    public TextMeshProUGUI victoryText; // Référence au composant Text
 
     void Start()
     {
         socketRenderers = GetComponentsInChildren<Renderer>();
         audioSource = GetComponent<AudioSource>();
+
+        // Assurez-vous que la référence Text est configurée dans l'inspecteur Unity
+        if (victoryText == null)
+        {
+            Debug.LogError("Veuillez assigner le composant Text dans l'inspecteur Unity.");
+        }
+        else
+        {
+            // Désactivez le texte au début
+            victoryText.gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -37,7 +52,6 @@ public class SocketChecking : MonoBehaviour
                 string nomObjet = objetTouche.name;
                 Debug.Log("Nom de l'objet détecté : " + nomObjet);
 
-                // Vérifiez si le cube est dans l'ordre correct
                 if (nomObjet != cubesInOrder[i])
                 {
                     wordInOrder = false;
@@ -51,20 +65,18 @@ public class SocketChecking : MonoBehaviour
             }
         }
 
-        // Changez la couleur des sockets en fonction de la validité du mot
         SetSocketsColor(wordInOrder ? Color.green : Color.red);
 
-        // Jouez le son si le mot est dans l'ordre correct et que le son n'a pas encore été joué
         if (wordInOrder && !soundPlayed)
         {
             PlaySuccessSound();
-            soundPlayed = true; // Marquez que le son a été joué
+            ShowVictoryText(); // Affichez le texte de victoire
+            soundPlayed = true;
         }
     }
 
     void SetSocketsColor(Color color)
     {
-        // Changez la couleur de tous les sockets
         for (int i = 0; i < socketRenderers.Length; i++)
         {
             socketRenderers[i].material.color = color;
@@ -73,10 +85,15 @@ public class SocketChecking : MonoBehaviour
 
     void PlaySuccessSound()
     {
-        // Jouez le son à partir de l'AudioSource
         if (audioSource != null && !audioSource.isPlaying)
         {
             audioSource.Play();
         }
+    }
+
+    void ShowVictoryText()
+    {
+        // Activez le texte de victoire
+        victoryText.gameObject.SetActive(true);
     }
 }
