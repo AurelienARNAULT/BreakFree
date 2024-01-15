@@ -8,10 +8,12 @@ public class MoveCharacter : MonoBehaviour
     private bool inForbiddenZone = false;
     private bool inSalon = false;
     private bool inChambre = false;
+    // private bool cadenasVisible = false;
 
     GameObject ChambreCollider;
     GameObject Door;
     GameObject CrimeDoNotCross;
+    GameObject Cadenas;
 
 
     void Start()
@@ -21,6 +23,9 @@ public class MoveCharacter : MonoBehaviour
         ChambreCollider = GameObject.Find("ChambreCollider");
         Door = GameObject.Find("Door");
         CrimeDoNotCross = GameObject.Find("CrimeChambre");
+        Cadenas = GameObject.Find("Cadenas");
+        Cadenas.SetActive(false);
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -38,6 +43,11 @@ public class MoveCharacter : MonoBehaviour
         else if (other.CompareTag("ChambreCollider"))
         {
             inChambre = true;
+        }
+        else if (other.CompareTag("PorteCollider"))
+        {
+            // cadenasVisible = true;
+            Cadenas.SetActive(true);
         }
         else if (other.CompareTag("Map"))
         {
@@ -62,6 +72,11 @@ public class MoveCharacter : MonoBehaviour
         else if (other.CompareTag("ChambreCollider"))
         {
             inChambre = false;
+        }
+        else if (other.CompareTag("PorteCollider"))
+        {
+            // cadenasVisible = false;
+            Cadenas.SetActive(false);
         }
     }
 

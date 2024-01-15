@@ -1,4 +1,4 @@
-import time
+
 import pygame
 import sys
 import numpy as np
@@ -27,7 +27,7 @@ background_image = None
 attempt = 0
 while not sio.connected and attempt < reconnection_attempts:
     try:
-        sio.connect('http://localhost:3000')
+        sio.connect('http://192.168.1.18:3000')
         print("Connecté au serveur WebSocket.")
     except socketio.exceptions.ConnectionError as e:
         print(f"Tentative {attempt + 1}/{reconnection_attempts} échouée: {e}")
@@ -148,9 +148,9 @@ finished_sound = pygame.mixer.Sound('assets/sounds/riddleFinished.mp3')
 
 # Récupération des dimensions de l'écran
 infoObject = pygame.display.Info()
-#width, height = infoObject.current_w, infoObject.current_h
+width, height = infoObject.current_w, infoObject.current_h
 #TODO: Remove this line
-width, height = 1024, 768
+#width, height = 1024, 768
 
 # Paramètres de l'image et de la fenêtre
 chemin_image = current_image_path
@@ -164,7 +164,7 @@ facteur_luminosite = 0.10
 
 # Création de la fenêtre plein écran
 #TODO: Remove the comment
-screen = pygame.display.set_mode((width, height))#, pygame.FULLSCREEN)
+screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 pygame.display.set_caption("Détection de Dessin de Soleil")
 
 # Initialisation des variables
