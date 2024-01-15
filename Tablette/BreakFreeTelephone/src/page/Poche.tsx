@@ -12,6 +12,7 @@ import Objects from "../composant/Objects";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useList } from "../context/ListContext";
 import socket from "../socket/socket";
+import Sound from "react-native-sound";
 
 const { width, height } = Dimensions.get("window");
 
@@ -70,6 +71,18 @@ const Poche = () => {
     try {
       const contentObject = JSON.parse(data.content);
       console.log(selectedObject);
+      var mySound = new Sound("wrongobject.mp3", Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+          console.log("Erreur de chargement du son", error);
+          return;
+        }
+        // Jouer le son
+        mySound.play((success) => {
+          if (!success) {
+            console.log("Erreur de lecture du son");
+          }
+        });
+      });
       if (selectedObject !== null) {
         console.log(contentObject.name);
         console.log(objectNames[selectedObject]);

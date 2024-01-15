@@ -41,7 +41,7 @@ export const ListProvider = ({ children }: ListProviderProps) => {
       const newState = [...prevState, object];
       console.log("Nouvel état de objectInPoche:", newState);
       Vibration.vibrate(1000);
-      var mySound = new Sound("bell.wav", Sound.MAIN_BUNDLE, (error) => {
+      var mySound = new Sound("riddlestep.mp3", Sound.MAIN_BUNDLE, (error) => {
         if (error) {
           console.log("Erreur de chargement du son", error);
           return;
