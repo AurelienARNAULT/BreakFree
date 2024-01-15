@@ -9,6 +9,7 @@ import Enigme from './src/page/Enigme';
 import socket from './src/socket/socket';
 import {useList, ListProvider} from './src/context/ListContext';
 import SocketManager from "./src/socket/SocketManager";
+import {BienJoueScreen} from "./src/page/Scanner";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ function App() {
                     <Stack.Screen name="Histoire" component={Histoire}/>
                     <Stack.Screen name="Poche" component={Poche}/>
                     <Stack.Screen name="Enigme" component={Enigme}/>
+                  <Stack.Screen name="BienJoue" component={BienJoueScreen}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </ListProvider>
