@@ -1,12 +1,12 @@
 import {
     GestureEvent,
-    GestureHandlerRootView, HandlerStateChangeEvent, LongPressGestureHandler, LongPressGestureHandlerEventPayload,
+    HandlerStateChangeEvent, LongPressGestureHandler, LongPressGestureHandlerEventPayload,
     PanGestureHandler, PanGestureHandlerEventPayload,
-    PinchGestureHandler, PinchGestureHandlerEventPayload,
-    RotationGestureHandler, RotationGestureHandlerEventPayload, State
+    PinchGestureHandler,
+    RotationGestureHandler, State
 } from "react-native-gesture-handler";
-import {Animated, Dimensions, LayoutChangeEvent, TouchableWithoutFeedback, View} from "react-native";
-import React, {useRef, useState} from "react";
+import {Animated, TouchableWithoutFeedback, View} from "react-native";
+import React, {useRef} from "react";
 
 interface position {
     top: number;
@@ -29,8 +29,6 @@ const Objects: React.FC<ObjectsProps> = ({id, objectName, containerPosition, isS
     const pinchRef = React.createRef<PinchGestureHandler>();
     const globalRef = useRef<View>(null);
     let top = useRef(0).current;
-    let margeTop = useRef(200).current;
-    let margeLeft = useRef(145).current;
 
     let circleRadius = 70;
     const trueTop = useRef(containerPosition?.top || 0);
@@ -83,19 +81,13 @@ const Objects: React.FC<ObjectsProps> = ({id, objectName, containerPosition, isS
             newImageHeight = circleRadius * 7;
             newImageWidth = circleRadius * 4.4;
             break;
+        case "razor":
+            imagePath = require('../ressources/image/poche/razor.png');
+            newImageHeight = circleRadius * 1.5;
+            newImageWidth = circleRadius * 3;
+            break;
     }
 
-
-    const [containerPosition2, setContainerPosition] = React.useState<position | null>(null);
-    const onContainerLayout = (event: LayoutChangeEvent) => {
-        const layout = event.nativeEvent.layout;
-        setContainerPosition({
-            top: 0,
-            left: 0,
-            right: layout.width,
-            bottom: layout.height,
-        });
-    };
 
     React.useEffect(() => {
 
@@ -109,10 +101,10 @@ const Objects: React.FC<ObjectsProps> = ({id, objectName, containerPosition, isS
             trueLeft.current = containerPosition?.left || 0;
             trueRight.current = containerPosition?.right || 0;
             top = 100000 + py;
-            trueTop.current = trueTop.current - (top || 0) - newImageHeight/2;
-            trueBottom.current = trueBottom.current - (top || 0) - (newImageHeight - circleRadius * 2) + newImageHeight/2;
-            trueLeft.current = trueLeft.current - px - newImageWidth/2
-            trueRight.current = trueRight.current - px - (newImageWidth - circleRadius * 2) + newImageWidth/2
+            trueTop.current = trueTop.current - (top || 0) - newImageHeight / 2;
+            trueBottom.current = trueBottom.current - (top || 0) - (newImageHeight - circleRadius * 2) + newImageHeight / 2;
+            trueLeft.current = trueLeft.current - px - newImageWidth / 2
+            trueRight.current = trueRight.current - px - (newImageWidth - circleRadius * 2) + newImageWidth / 2
             randomTop = Math.floor(Math.random() * ((trueBottom.current - 10) - (trueTop.current + 10) + 1)) + trueTop.current + 10;
             _lastOffset.current.y = _lastOffset.current.y + randomTop;
             randomLeft = Math.floor(Math.random() * ((trueRight.current - 10) - (trueLeft.current + 10) + 1)) + trueLeft.current + 10;
@@ -172,47 +164,6 @@ const Objects: React.FC<ObjectsProps> = ({id, objectName, containerPosition, isS
             firstTouch = false;
         }
     };
-    //ROTATION GESTURE -------------------------------------------
-    const _rotate = new Animated.Value(0);
-    let _lastRotate = 0;
-
-    let _rotateStr = _rotate.interpolate({
-        inputRange: [-100, 100],
-        outputRange: ['-100rad', '100rad'],
-    });
-
-    const _onRotateGestureEvent = Animated.event(
-        [{nativeEvent: {rotation: _rotate}}],
-        {useNativeDriver: true}
-    );
-
-    const _onRotateHandlerStateChange = (event: GestureEvent<RotationGestureHandlerEventPayload>) => {
-        if (event.nativeEvent.state === State.ACTIVE) {
-            _lastRotate += event.nativeEvent.rotation;
-            _rotate.setOffset(_lastRotate);
-            _rotate.setValue(0);
-        }
-    };
-
-
-    //PINCH GESTURE -------------------------------------------
-    const _baseScale = new Animated.Value(1);
-    const _pinchScale = new Animated.Value(1);
-    const _scale = Animated.multiply(_baseScale, _pinchScale);
-    let _lastScale = 1;
-
-    const _onPinchGestureEvent = Animated.event(
-        [{nativeEvent: {scale: _pinchScale}}],
-        {useNativeDriver: true}
-    );
-
-    const _onPinchHandlerStateChange = (event: GestureEvent<PinchGestureHandlerEventPayload>) => {
-        if (event.nativeEvent.state === State.ACTIVE) {
-            _lastScale *= event.nativeEvent.scale;
-            _baseScale.setValue(_lastScale);
-            _pinchScale.setValue(1);
-        }
-    };
 
     const onLongPress = (event: HandlerStateChangeEvent<LongPressGestureHandlerEventPayload>) => {
         if (event.nativeEvent.state === State.ACTIVE) {
@@ -227,77 +178,54 @@ const Objects: React.FC<ObjectsProps> = ({id, objectName, containerPosition, isS
                 height: newImageHeight,
                 width: newImageWidth,
                 top: -100000,
-            }} onLayout={onContainerLayout} ref={globalRef}>
-                <PinchGestureHandler
-                    ref={pinchRef}
-                    onGestureEvent={_onPinchGestureEvent}
-                    onHandlerStateChange={_onPinchHandlerStateChange}
-                    simultaneousHandlers={[panRef, rotationRef]}>
+            }} ref={globalRef}>
+
+                <PanGestureHandler onGestureEvent={_onPanGestureEvent}
+                                   onHandlerStateChange={onPanHandlerStateChange}
+                                   ref={panRef}
+                                   simultaneousHandlers={[pinchRef, rotationRef]}>
                     <Animated.View
                         style={{
                             height: newImageHeight,
                             width: newImageWidth,
                         }}>
-                        <RotationGestureHandler
-                            ref={rotationRef}
-                            onGestureEvent={_onRotateGestureEvent}
-                            onHandlerStateChange={_onRotateHandlerStateChange}
-                            simultaneousHandlers={[pinchRef, panRef]}>
+                        <LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={600}>
                             <Animated.View
-                                style={{
+                                style={[{
                                     height: newImageHeight,
                                     width: newImageWidth,
-                                }}>
-                                <PanGestureHandler onGestureEvent={_onPanGestureEvent}
-                                                   onHandlerStateChange={onPanHandlerStateChange}
-                                                   ref={panRef}
-                                                   simultaneousHandlers={[pinchRef, rotationRef]}>
-                                    <Animated.View
-                                        style={{
+
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }, {
+                                    transform: [
+                                        {
+                                            translateX: Animated.add(_touchX, new Animated.Value(-circleRadius)),
+                                        },
+                                        {
+                                            translateY: Animated.add(_touchY, new Animated.Value(-circleRadius)),
+                                        },
+                                        {perspective: 200}
+                                    ],
+                                }]}>
+                                <Animated.Image
+                                    source={imagePath}
+                                    style={[
+                                        {
                                             height: newImageHeight,
                                             width: newImageWidth,
-                                        }}>
-                                        <LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={600}>
-                                            <Animated.View
-                                                style={[{
-                                                    height: newImageHeight,
-                                                    width: newImageWidth,
-
-                                                    flexDirection: 'row',
-                                                    alignItems: 'center',
-                                                }, {
-                                                    transform: [
-                                                        {
-                                                            translateX: Animated.add(_touchX, new Animated.Value(-circleRadius)),
-                                                        },
-                                                        {
-                                                            translateY: Animated.add(_touchY, new Animated.Value(-circleRadius)),
-                                                        },
-                                                        {perspective: 200}, {rotate: _rotateStr}, {scale: _scale}
-                                                    ],
-                                                }]}>
-                                                <Animated.Image
-                                                    source={imagePath}
-                                                    style={[
-                                                        {
-                                                            height: newImageHeight,
-                                                            width: newImageWidth,
-                                                            backgroundColor:isSelected ? 'rgba(251, 255, 0, 0.4)' : 'transparent',
-                                                            borderRadius: 20,
-                                                        },{
-                                                            transform: [
-                                                                {rotate: objectName==="ticket" ? "0.3rad" : objectName==="wallet" ? "0.8rad" : "0rad"},
-                                                            ],
-                                                        }]}
-                                                />
-                                            </Animated.View>
-                                        </LongPressGestureHandler>
-                                    </Animated.View>
-                                </PanGestureHandler>
+                                            backgroundColor: isSelected ? 'rgba(251, 255, 0, 0.4)' : 'transparent',
+                                            borderRadius: 20,
+                                        }, {
+                                            transform: [
+                                                {rotate: objectName === "ticket" ? "0.3rad" : objectName === "wallet" ? "0.8rad" : objectName === "razor" ? "0.5rad" : "0rad"},
+                                            ],
+                                        }]}
+                                />
                             </Animated.View>
-                        </RotationGestureHandler>
+                        </LongPressGestureHandler>
                     </Animated.View>
-                </PinchGestureHandler>
+                </PanGestureHandler>
             </View>
         </TouchableWithoutFeedback>
     );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { RNCamera, BarCodeReadEvent } from "react-native-camera";
-import { createStackNavigator } from "@react-navigation/stack";
+import {View, StyleSheet, Text, LogBox} from "react-native";
+import {RNCamera, BarCodeReadEvent} from "react-native-camera";
+import {createStackNavigator} from "@react-navigation/stack";
 import socket from "../socket/socket";
 
 
@@ -11,6 +11,8 @@ const Stack = createStackNavigator();
 const QR_CODE_EXPECTED = "http://breakFree/scan?colors=bleu,blanc,rouge,vert";
 
 const App = ({ navigation }: { navigation: any }) => {
+  LogBox.ignoreLogs(['ViewPropTypes will be removed from React Native']);
+
   useEffect(() => {
     socket.emit("scanned");
   }, []);

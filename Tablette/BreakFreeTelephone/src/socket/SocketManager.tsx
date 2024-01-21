@@ -26,9 +26,10 @@ const SocketManager: React.FC = () => {
                     case "PaintSendToPocket" :
                         addObjectInPoche("paint");
                         break;
+                    case "RazorSendToPocket" :
+                        addObjectInPoche("razor");
+                        break;
                 }
-
-
             } catch (error) {
                 console.error("Erreur lors de la conversion de data.content en objet :", error);
             }
