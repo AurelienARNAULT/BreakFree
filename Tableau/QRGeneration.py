@@ -26,7 +26,7 @@ qr_code_img = qr.make_image(fill=(37,155,157),fill_color='black', back_color='tr
 from PIL import Image
 
 # Charger l'image hôte
-host_image = Image.open('assets/sprits/tableauChambreDechire.jpg')
+host_image = Image.open('assets/sprits/tableauChambreFond.jpg')
 
 # Redimensionner le QR code si nécessaire
 qr_code_img = qr_code_img.resize((100, 100))  # Ajustez la taille selon vos besoins

@@ -31,7 +31,7 @@ background_image = None
 attempt = 0
 while not sio.connected and attempt < reconnection_attempts:
     try:
-        sio.connect('http://192.168.1.18:3000')
+        sio.connect('http://localhost:3000')
         print("Connecté au serveur WebSocket.")
     except socketio.exceptions.ConnectionError as e:
         print(f"Tentative {attempt + 1}/{reconnection_attempts} échouée: {e}")
@@ -282,17 +282,7 @@ while running:
                     fond_original.blit(background_image, clear_rect.topleft, clear_rect)
         screen.blit(fond_original, (0, 0))
 
-        if scanned:
-            font_size = 75
-            font = pygame.font.SysFont(None, font_size)
-            if not font:
-                print("Failed to load font.")
-            text = font.render("Scanned Successfully!", True, (255, 255, 255))
-            text_rect = text.get_rect(center=(width / 2, height / 2))
-
-            background_rect = text_rect.inflate(20, 10)
-            pygame.draw.rect(screen, (255, 0, 0), background_rect)
-            screen.blit(text, text_rect)
+        #if scanned:
 
         pygame.display.flip()
     else:
