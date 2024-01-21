@@ -23,6 +23,8 @@ public class ButtonFollowVisual : MonoBehaviour
         
     }
 
+
+
     public void Follow(BaseInteractionEventArgs hover)
     {
         if (!messageSent)

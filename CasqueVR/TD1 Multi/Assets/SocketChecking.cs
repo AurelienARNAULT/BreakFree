@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // N'oubliez pas d'ajouter cette ligne pour accéder aux fonctionnalités UI
+using UnityEngine.UI; 
 using TMPro;
+using SocketIOClient;
 
 public class SocketChecking : MonoBehaviour
 {
@@ -15,8 +17,14 @@ public class SocketChecking : MonoBehaviour
 
     public TextMeshProUGUI victoryText; // Référence au composant Text
 
+    public SocketIOUnity socket;
+    public string serverUrlLink = "http://localhost:3000";
+
     void Start()
     {
+        var uri = new Uri(serverUrlLink);
+        socket = new SocketIOUnity(uri);
+        socket.Connect();
         socketRenderers = GetComponentsInChildren<Renderer>();
         audioSource = GetComponent<AudioSource>();
 
@@ -72,6 +80,7 @@ public class SocketChecking : MonoBehaviour
             PlaySuccessSound();
             ShowVictoryText(); // Affichez le texte de victoire
             soundPlayed = true;
+            SendSocket("objectSentToPocket","RazorSendToPocket");
         }
     }
 
@@ -96,4 +105,12 @@ public class SocketChecking : MonoBehaviour
         // Activez le texte de victoire
         victoryText.gameObject.SetActive(true);
     }
+
+    public void SendSocket(string eventName, string body)
+            {
+                Debug.Log($"Message sent: {body}");
+                Debug.Log($"Event name: {eventName}");
+                socket.EmitAsync(eventName, body);
+                socket.Dispose();
+            }
 }
