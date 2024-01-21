@@ -1,20 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ObjectManager : MonoBehaviour
 {
     Collider roomCollider;
     GameObject roomCrimeTapes;
+    GameObject fond;
+    GameObject piece;
 
 
     void Start()
     {
         Debug.Log("ObjectManager Start");
+        string nomSceneActuelle = SceneManager.GetActiveScene().name;
         try 
         {
-            roomCollider = GameObject.Find("ChambreCollider").GetComponent<Collider>();
-            roomCrimeTapes = GameObject.Find("CrimeChambre");
+            if (nomSceneActuelle == "MapScene")
+            {
+                roomCollider = GameObject.Find("ChambreCollider").GetComponent<Collider>();
+                roomCrimeTapes = GameObject.Find("CrimeChambre");
+            }
+            else if (nomSceneActuelle == "PadloackScene")
+            {
+                Debug.Log("je cherche les ibjects ");
+                fond = GameObject.Find("Fond");
+                piece = GameObject.Find("Piece");
+            }
         }
         catch (System.Exception)
         {
@@ -44,7 +57,6 @@ public class ObjectManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit) && SocketManager.Instance.GetCurrentObject() != null)
             {
                 GameObject clickedObject = hit.collider.gameObject;
-
                 Debug.Log(clickedObject.tag);
                 if (clickedObject.tag.ToLower() == "door" && SocketManager.Instance.GetCurrentObject().ToLower() == "key")
                 {
@@ -53,7 +65,20 @@ public class ObjectManager : MonoBehaviour
                     roomCollider.tag = "ChambreCollider";
                     roomCrimeTapes.SetActive(false);
                     SocketManager.Instance.SendSocket("removeObject", "{\"name\":\"" + SocketManager.Instance.GetCurrentObject() + "\"}");  
-                }else
+                }
+                if (clickedObject.tag.ToLower() == "dicefond" && SocketManager.Instance.GetCurrentObject().ToLower() == "dice")
+                {
+                    SoundManager.Instance.PlayRiddleStep();
+                    fond.GetComponent<CadenasClick>().ShowDice();
+                    SocketManager.Instance.SendSocket("removeObject", "{\"name\":\"" + SocketManager.Instance.GetCurrentObject() + "\"}");
+                }
+                if (clickedObject.tag.ToLower() == "piecefond" && SocketManager.Instance.GetCurrentObject().ToLower() == "piece")
+                {
+                    SoundManager.Instance.PlayRiddleStep();
+                    fond.GetComponent<CadenasClick>().ShowPiece();
+                    SocketManager.Instance.SendSocket("removeObject", "{\"name\":\"" + SocketManager.Instance.GetCurrentObject() + "\"}");
+                }
+                else
                 {
                     Debug.Log("Wrong object");
                     SoundManager.Instance.PlayWrongObject();

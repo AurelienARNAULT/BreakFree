@@ -18,7 +18,7 @@ public class SceneLoaderPiece : MonoBehaviour
         {
             // Charger la présence ou non des objets
             Debug.Log("HasKey");
-            SetObjectPresence(PlayerPrefs.GetInt("PiecePresentInPadlock", 2) != 1);
+            SetObjectPresence(PlayerPrefs.GetInt("PiecePresentInPadlock", 2) == 2);
 
             // Charger la scène
             // SceneManager.LoadScene(2);

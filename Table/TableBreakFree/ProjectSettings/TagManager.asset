@@ -11,6 +11,10 @@ TagManager:
   - Door
   - Map
   - PorteCollider
+  - DiceFond
+  - PieceFond
+  - Dice
+  - Piece
   layers:
   - Default
   - TransparentFX

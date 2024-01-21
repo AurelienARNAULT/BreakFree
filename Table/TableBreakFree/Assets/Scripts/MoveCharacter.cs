@@ -24,7 +24,7 @@ public class MoveCharacter : MonoBehaviour
         Door = GameObject.Find("Door");
         CrimeDoNotCross = GameObject.Find("CrimeChambre");
         Cadenas = GameObject.Find("Cadenas");
-        Cadenas.SetActive(false);
+        if (Cadenas) Cadenas.SetActive(false);
 
     }
 

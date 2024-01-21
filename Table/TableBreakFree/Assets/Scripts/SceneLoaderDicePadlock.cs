@@ -9,6 +9,7 @@ public class SceneLoaderDicePadlock : MonoBehaviour
     void Start()
     {
         LoadSavedScene();
+
         //ObjectPaint = this.gameObject;
     }
 
@@ -18,7 +19,7 @@ public class SceneLoaderDicePadlock : MonoBehaviour
         {
             // Charger la présence ou non des objets
             Debug.Log("HasKey");
-            SetObjectPresence(PlayerPrefs.GetInt("DicePresentInPadlock", 2) != 1);
+            SetObjectPresence(PlayerPrefs.GetInt("DicePresentInPadlock", 2) == 2);
 
             // Charger la scène
             // SceneManager.LoadScene(2);

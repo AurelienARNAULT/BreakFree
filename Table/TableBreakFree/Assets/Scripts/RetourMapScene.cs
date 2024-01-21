@@ -9,7 +9,8 @@ public class RetourMapScene : MonoBehaviour
     GameObject ObjectDice;
     GameObject ObjectPaint;
     GameObject ObjectKey;
-    GameObject ObjectPiece;
+    public GameObject ObjectPiecePadlock;
+    public GameObject ObjectDicePadlock;
 
 
     void Start()
@@ -17,7 +18,6 @@ public class RetourMapScene : MonoBehaviour
         ObjectDice = GameObject.Find("Dice");
         ObjectPaint = GameObject.Find("Paint");
         ObjectKey = GameObject.Find("Key");
-        ObjectPiece = GameObject.Find("Piece");
     }
 
     void Update()
@@ -72,8 +72,10 @@ public class RetourMapScene : MonoBehaviour
                 }
                 if (clickedObject.name == "RetourMapSceneFromPadlock")
                 {
-                    if (ObjectPiece) PlayerPrefs.SetInt("PiecePresentInPadlock", ObjectPiece.activeInHierarchy ? 2 : 1);
-                    if (ObjectDice) PlayerPrefs.SetInt("DicePresentInPadlock", ObjectDice.activeInHierarchy ? 2 : 1);
+                    Debug.Log(ObjectPiecePadlock.activeInHierarchy);
+
+                    if (ObjectPiecePadlock) PlayerPrefs.SetInt("PiecePresentInPadlock", ObjectPiecePadlock.activeInHierarchy ? 2 : 1);
+                    if (ObjectDicePadlock) PlayerPrefs.SetInt("DicePresentInPadlock", ObjectDicePadlock.activeInHierarchy ? 2 : 1);
 
                     PlayerPrefs.Save();
                     // Votre code � ex�cuter lorsque l'objet est cliqu� ou touch�
