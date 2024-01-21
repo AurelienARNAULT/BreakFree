@@ -197,14 +197,14 @@ rayons_droite = False
 afficher_sprites = False
 
 # Chargement des sprites
-curved_arrow_sprit = pygame.image.load('assets/sprits/curved-arrow_sprit.png')
-book_sprit = pygame.image.load('assets/sprits/book_sprit.png')
-arrow_sprit = pygame.image.load('assets/sprits/arrow_sprit.png')
-key_sprit = pygame.image.load('assets/sprits/key_sprit.png')
+door_sprite = pygame.image.load('assets/sprits/door_sprite.png')
+arrow_sprite = pygame.image.load('assets/sprits/arrow_sprite.png')
+key_sprite = pygame.image.load('assets/sprits/key_sprite.png')
+bed_sprite = pygame.image.load('assets/sprits/bed_sprite.png')
 
 # Coordonnées de départ pour les sprites
 sprite_x = 10  # 10 pixels depuis le bord gauche
-sprite_y = height - curved_arrow_sprit.get_height() - 10
+sprite_y = height - door_sprite.get_height() - 10
 
 # Création d'une surface pour le dessin
 dessin_surface = pygame.Surface((width, height), pygame.SRCALPHA)
@@ -351,10 +351,10 @@ while running:
             sent = True
 
         if afficher_sprites:
-            screen.blit(curved_arrow_sprit, (sprite_x, sprite_y))
-            screen.blit(book_sprit, (sprite_x + curved_arrow_sprit.get_width() + 5, sprite_y))
-            screen.blit(arrow_sprit, (sprite_x + curved_arrow_sprit.get_width() + book_sprit.get_width() + 10, sprite_y))
-            screen.blit(key_sprit, (sprite_x + curved_arrow_sprit.get_width() + book_sprit.get_width() + arrow_sprit.get_width() + 15, sprite_y))
+            screen.blit(key_sprite, (sprite_x , sprite_y + 10))
+            screen.blit(arrow_sprite, (sprite_x + key_sprite.get_width() + 5, sprite_y + 20))
+            screen.blit(door_sprite, (sprite_x + key_sprite.get_width() + arrow_sprite.get_width() + 10, sprite_y))
+            screen.blit(bed_sprite, (sprite_x + key_sprite.get_width() + arrow_sprite.get_width() + door_sprite.get_width() + 15, sprite_y + 10))
 
         # Mise à jour de l'affichage
         pygame.display.flip()
