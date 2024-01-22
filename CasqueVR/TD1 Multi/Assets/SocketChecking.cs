@@ -80,7 +80,7 @@ public class SocketChecking : MonoBehaviour
             PlaySuccessSound();
             ShowVictoryText(); // Affichez le texte de victoire
             soundPlayed = true;
-            SendSocket("objectSentToPocket","RazorSendToPocket");
+            SendSocket("objectSentToPocket", "{\"name\":\"RazorSendToPocket\"}");
         }
     }
 

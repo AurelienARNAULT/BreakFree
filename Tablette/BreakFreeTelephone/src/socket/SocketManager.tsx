@@ -16,6 +16,7 @@ const SocketManager: React.FC = () => {
         socket.on('onObjectSentToPocket', (data: any) => { // Assurez-vous que le type de 'data' est correct
             try {
                 const contentObject = JSON.parse(data.content);
+                console.log("Objet reçu:", contentObject);
                 switch (contentObject.name) {
                     case "KeySendToPocket" :
                         addObjectInPoche("key");
