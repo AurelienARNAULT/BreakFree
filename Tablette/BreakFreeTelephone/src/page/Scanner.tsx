@@ -25,7 +25,7 @@ const App = ({ navigation }: { navigation: any }) => {
     if (data === QR_CODE_EXPECTED) {
       navigation.navigate("BienJoue", { barcodeData: data });
     } else {
-      setError("QR code incorrect. Veuillez réessayer. " + data);
+      setError("QR code incorrect. Veuillez réessayer. ");
     }
 
   };
@@ -56,8 +56,7 @@ export const BienJoueScreen = ({ route }: { route: any }) => {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Bien joué !</Text>
-      <Text>Code-barres scanné : {barcodeData}</Text>
+      <Text style={styles.text}>Rouge Vert Bleu Blanc</Text>
     </View>
   );
 };
@@ -76,6 +75,11 @@ const styles = StyleSheet.create({
   error: {
     color: "red",
     fontSize: 16,
+    padding: 20,
+    textAlign: "center"
+  },
+  text: {
+    fontSize: 30,
     padding: 20,
     textAlign: "center"
   }
